@@ -10,5 +10,8 @@ Route::get('/', function () {
 // Página principal usa index.blade.php
 Route::view('/', 'index')->name('home');
 
+// Vista de Ingresos
 Route::view('/ingresos', 'ingresos')->name('ingresos');
 
+// Vista de Postulante
+Route::view('/postulante', 'postulante')->name('postulante');

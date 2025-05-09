@@ -23,7 +23,7 @@
     <div class="container">
         <h1>Ingresos</h1>
         <div class="buttons">
-            <a href="{{ route('postulante.create') }}" class="btn">POSTULANTE</a>
+            <a href="{{ route('postulante') }}" class="btn">POSTULANTE</a>
             <a href="{{ route('empresa.create') }}" class="btn btn-company">EMPRESA</a>
         </div>
         <a href="{{ route('home') }}" class="back">&larr; Volver</a>
