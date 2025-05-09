@@ -11,3 +11,6 @@ Route::view('/ingresos', 'ingresos')->name('ingresos');
 
 // Vista de Postulante
 Route::view('/postulante', 'postulante')->name('postulante');
+
+// Vista de Empresa
+Route::view('/empresa', 'empresa')->name('empresa');
