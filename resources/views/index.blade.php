@@ -1,82 +1,41 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Digitalizar CVs - Municipalidad</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Municipalidad</title>
+    <style>
+        /* Reset y tipografía base */
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; text-align: center; background: #f9f9f9; }
+        .container { max-width: 600px; margin: 5rem auto; padding: 1rem; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h1 { margin-bottom: 2rem; font-size: 2rem; color: #333; }
+        /* Botones principales */
+        .buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+        .btn-main { display: inline-block; padding: 1rem 2rem; font-size: 1.1rem; color: #fff; text-decoration: none; border-radius: 5px; transition: background 0.3s; }
+        .btn-ingresos { background: #007BFF; }
+        .btn-ingresos:hover { background: #0056b3; }
+        .btn-busquedas { background: #28a745; }
+        .btn-busquedas:hover { background: #1e7e34; }
+        /* Enlace de configuración */
+        .settings { margin-top: 3rem; }
+        .settings a { color: #555; text-decoration: none; font-size: 0.9rem; display: inline-flex; align-items: center; }
+        .settings a:hover { text-decoration: underline; }
+        .settings .icon { margin-right: 0.5rem; font-size: 1.1rem; }
+    </style>
 </head>
-<body class="bg-blue-50 min-h-screen p-8">
-
-  <!-- Encabezado -->
-  <header class="mb-8">
-    <h1 class="text-3xl font-bold text-blue-800">Digitalización de CVs - Municipalidad</h1>
-    <p class="text-blue-600">Panel de gestión para secretaría de empleo</p>
-  </header>
-
-  <!-- Filtros -->
-  <section class="mb-6 bg-white p-4 rounded-lg shadow">
-    <h2 class="text-xl font-semibold mb-2 text-blue-700">Filtrar por Título</h2>
-    <div class="flex gap-4 items-center">
-      <select class="border border-blue-300 rounded px-3 py-2 w-full max-w-md">
-        <option value="">Todos los títulos</option>
-        <option>Contador Público</option>
-        <option>Lic. en Administración</option>
-        <option>Técnico en Informática</option>
-      </select>
-      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Buscar</button>
+<body>
+    <div class="container">
+        <h1>Portal de CV – Municipalidad</h1>
+        <div class="buttons">
+            <!-- Reemplaza las rutas por las de tus controladores -->
+            <a href="{{ route('ingresos') }}" class="btn-main btn-ingresos">INGRESOS</a>
+            <a href="{{ route('cv.search') }}" class="btn-main btn-busquedas">BÚSQUEDAS</a>
+        </div>
+        <div class="settings">
+            <a href="{{ route('config.index') }}">
+                <span class="icon">⚙️</span> CONFIGURACIONES
+            </a>
+        </div>
     </div>
-  </section>
-
-  <!-- Formulario de carga -->
-  <section class="mb-8 bg-white p-6 rounded-lg shadow">
-    <h2 class="text-xl font-semibold mb-4 text-blue-700">Subir nuevo CV</h2>
-    <form class="space-y-4">
-      <div>
-        <label class="block font-medium text-blue-800">Nombre completo</label>
-        <input type="text" class="mt-1 w-full border border-blue-300 rounded px-3 py-2" placeholder="Ej: Juan Pérez">
-      </div>
-      <div>
-        <label class="block font-medium text-blue-800">Título profesional</label>
-        <input type="text" class="mt-1 w-full border border-blue-300 rounded px-3 py-2" placeholder="Ej: Lic. en Psicología">
-      </div>
-      <div>
-        <label class="block font-medium text-blue-800">Archivo PDF del CV</label>
-        <input type="file" accept="application/pdf" class="mt-1 w-full border border-blue-300 rounded px-3 py-2">
-      </div>
-      <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Subir CV</button>
-    </form>
-  </section>
-
-  <!-- Tabla de resultados -->
-  <section class="bg-white p-6 rounded-lg shadow">
-    <h2 class="text-xl font-semibold mb-4 text-blue-700">CVs Cargados</h2>
-    <table class="min-w-full table-auto border border-blue-200">
-      <thead class="bg-blue-100">
-        <tr>
-          <th class="px-4 py-2 text-left text-blue-800">Nombre</th>
-          <th class="px-4 py-2 text-left text-blue-800">Título</th>
-          <th class="px-4 py-2 text-left text-blue-800">Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="border-t">
-          <td class="px-4 py-2">Lucía Gómez</td>
-          <td class="px-4 py-2">Contadora Pública</td>
-          <td class="px-4 py-2">
-            <a href="#" class="text-blue-600 hover:underline">Ver CV</a>
-          </td>
-        </tr>
-        <tr class="border-t">
-          <td class="px-4 py-2">Carlos Ruiz</td>
-          <td class="px-4 py-2">Técnico en Electricidad</td>
-          <td class="px-4 py-2">
-            <a href="#" class="text-blue-600 hover:underline">Ver CV</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-
 </body>
 </html>
