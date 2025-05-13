@@ -32,7 +32,7 @@
             <a href="{{ route('index') }}" class="btn-main btn-busquedas">BÚSQUEDAS</a>
         </div>
         <div class="settings">
-            {{-- <a href="{{ route('config.index') }}"> --}}
+            <a href="{{ route('index') }}">
                 <span class="icon">⚙️</span> CONFIGURACIONES
             </a>
         </div>
