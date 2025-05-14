@@ -23,7 +23,7 @@
   <div class="container">
     <h1>Postulante</h1>
     <div class="buttons">
-      <a href="{{ route('index') }}" class="btn">NUEVO</a>
+      <a href="{{ route('postulante_nuevo') }}" class="btn">NUEVO</a>
       <a href="{{ route('index') }}" class="btn btn-update">ACTUALIZAR</a>
     </div>
     <a href="{{ route('ingresos') }}" class="back"><span class="arrow">&larr;</span>Volver</a>
