@@ -72,13 +72,7 @@
       <label for="domicilio">Domicilio</label>
       <input type="text" id="domicilio" name="domicilio" placeholder="Calle, nro, piso" required>
 
-      <label for="profesion">Profesión</label>
-      <input list="profesiones" id="profesion" name="profesion" placeholder="Empieza a escribir y selecciona" required>
-      <datalist id="profesiones">
-        @foreach($profesiones as $prof)
-          <option value="{{ $prof }}">
-        @endforeach
-      </datalist>
+
 
       <label for="estudios">Estudios cursados</label>
       <textarea id="estudios" name="estudios" rows="3" placeholder="Ej: Secundario completo" required></textarea>
