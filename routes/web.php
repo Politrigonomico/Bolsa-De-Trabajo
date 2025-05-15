@@ -1,16 +1,21 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostulanteController;
 
+// Página principal
+Route::view('/', 'index')->name('index');
 
-// Página principal usa index.blade.php
-Route::view('/', 'index') ->name('index');
-
-// Vista de Ingresos
+// Vistas estáticas
 Route::view('/ingresos', 'ingresos')->name('ingresos');
-
-// Vista de Postulante
 Route::view('/postulante', 'postulante')->name('postulante');
-
-// Vista de Empresa
 Route::view('/empresa', 'empresa')->name('empresa');
+
+// Carga y guardado de postulantes
+Route::get('/postulantes', [PostulanteController::class, 'create'])->name('postulante.create');
+Route::post('/postulantes', [PostulanteController::class, 'store'])->name('postulante.store');
+
+// Búsqueda y listado de postulantes
+Route::get('/busqueda', [PostulanteController::class, 'index'])->name('busqueda');
+
+
