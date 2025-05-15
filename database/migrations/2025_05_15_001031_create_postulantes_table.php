@@ -4,39 +4,32 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreatePostulantesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('postulantes', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->string('apellido');
-            $table->integer('dni') ->unique();
-            $table->integer('telefono');
-            $table->string('email') ->unique();
-            $table->string('domicilio');
-            $table->string('localidad');
-            $table->string('estado_civil');
-            $table->string('profesion') -> nullable();
-            $table->string('experiencia_laboral') -> nullable();
-            $table->string('estudios_cursados') -> nullable();
-            $table->boolean('carnet_conducir') -> default(false);
-            $table->string('movilidad_propia') -> default(false);
-            $table->string('sexo') -> default('no especificado');
+            $table->string('dni')->unique();
             $table->date('fecha_nacimiento');
-            $table->timestamp('created_at') -> useCurrent();
+            $table->string('sexo');
+            $table->string('estado_civil');
+            $table->string('localidad');
+            $table->string('domicilio');
+            $table->text('estudios_cursados');
+            $table->text('experiencia_laboral');
+            $table->boolean('carnet_conducir')->default(0);
+            $table->boolean('movilidad_propia')->default(0);
+            $table->string('email')->unique();
+            $table->string('telefono');
+            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('postulantes');
     }
-};
+}

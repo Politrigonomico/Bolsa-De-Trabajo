@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Nuevo Postulante – Municipalidad</title>
   <style>
     body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 0; padding: 0; }
@@ -36,19 +36,19 @@
 <body>
   <div class="container">
     <h1>Nuevo Postulante</h1>
-    <form action="{{ route('postulante.store') }}" method="POST">
+    <form id="postulanteForm" action="{{ route('postulante.store') }}" method="POST">
       @csrf
       <label for="nombre">Nombre</label>
-      <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan" required>
+      <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan" required />
 
       <label for="apellido">Apellido</label>
-      <input type="text" id="apellido" name="apellido" placeholder="Ej: Pérez" required>
+      <input type="text" id="apellido" name="apellido" placeholder="Ej: Pérez" required />
 
       <label for="dni">DNI</label>
-      <input type="text" id="dni" name="dni" placeholder="Solo números, 7-8 dígitos" pattern="\d{7,8}" title="7 u 8 dígitos numéricos" required>
+      <input type="text" id="dni" name="dni" placeholder="Solo números, 7-8 dígitos" pattern="\d{7,8}" title="7 u 8 dígitos numéricos" required />
 
-      <label for="fecha_nac">Fecha de nacimiento</label>
-      <input type="date" id="fecha_nac" name="fecha_nac" required>
+      <label for="fecha_nacimiento">Fecha de nacimiento</label>
+      <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required />
 
       <label for="sexo">Sexo</label>
       <select id="sexo" name="sexo" required>
@@ -67,32 +67,30 @@
       </select>
 
       <label for="localidad">Localidad</label>
-      <input type="text" id="localidad" name="localidad" placeholder="Ej: Arroyo Seco" required>
+      <input type="text" id="localidad" name="localidad" placeholder="Ej: Arroyo Seco" required />
 
       <label for="domicilio">Domicilio</label>
-      <input type="text" id="domicilio" name="domicilio" placeholder="Calle, nro, piso" required>
+      <input type="text" id="domicilio" name="domicilio" placeholder="Calle, nro, piso" required />
 
+      <label for="estudios_cursados">Estudios cursados</label>
+      <textarea id="estudios_cursados" name="estudios_cursados" rows="3" placeholder="Ej: Secundario completo" required></textarea>
 
-
-      <label for="estudios">Estudios cursados</label>
-      <textarea id="estudios" name="estudios" rows="3" placeholder="Ej: Secundario completo" required></textarea>
-
-      <label for="experiencias">Experiencias laborales</label>
-      <textarea id="experiencias" name="experiencias" rows="4" placeholder="Describir brevemente" required></textarea>
+      <label for="experiencia_laboral">Experiencias laborales</label>
+      <textarea id="experiencia_laboral" name="experiencia_laboral" rows="4" placeholder="Describir brevemente" required></textarea>
 
       <label>
-        <input type="checkbox" name="carnet"> Carnet de conducir
+        <input type="checkbox" name="carnet_conducir" /> Carnet de conducir
       </label>
 
       <label>
-        <input type="checkbox" name="movilidad"> Movilidad propia
+        <input type="checkbox" name="movilidad_propia" /> Movilidad propia
       </label>
 
       <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="ejemplo@dominio.com" required>
+      <input type="email" id="email" name="email" placeholder="ejemplo@dominio.com" required />
 
       <label for="telefono">Teléfono</label>
-      <input type="tel" id="telefono" name="telefono" placeholder="Ej: 3412345678" pattern="[0-9]{8,15}" title="Solo números, 8-15 dígitos" required>
+      <input type="tel" id="telefono" name="telefono" placeholder="Ej: 3412345678" pattern="[0-9]{8,15}" title="Solo números, 8-15 dígitos" required />
 
       <div class="actions">
         <button type="submit">Guardar CV</button>
@@ -100,5 +98,11 @@
       </div>
     </form>
   </div>
+
+  <script>
+    document.getElementById('postulanteForm').addEventListener('submit', function() {
+      alert('Formulario enviado. El postulante será registrado si los datos son correctos.');
+    });
+  </script>
 </body>
 </html>

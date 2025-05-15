@@ -2,29 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Postulante extends Model
 {
-    protected $table = 'postulantes';
+    use HasFactory;
 
     protected $fillable = [
-        'nombre',
-        'apellido',
-        'dni',
-        'telefono',
-        'email',
-        'domicilio',
-        'localidad',
-        'estado_civil',
-        'profesion',
-        'experiencia_laboral',
-        'estudios_cursados',
-        'carnet_conducir',
-        'movilidad_propia',
-        'sexo',
-        'fecha_nacimiento'
+        'nombre', 'apellido', 'dni', 'fecha_nacimiento', 'sexo', 'estado_civil',
+        'localidad', 'domicilio', 'estudios_cursados', 'experiencia_laboral',
+        'carnet_conducir', 'movilidad_propia', 'email', 'telefono'
     ];
+    
 
-    public $timestamps = false;
 }
