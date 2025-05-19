@@ -18,5 +18,4 @@ Route::post('/postulantes', [PostulanteController::class, 'store'])->name('postu
 // Búsqueda y listado de postulantes
 Route::get('/busqueda', [PostulanteController::class, 'index'])->name('busqueda');
 
-Route::view('/postulante_nuevo', 'postulante_nuevo')->name('postulante_nuevo');
 
