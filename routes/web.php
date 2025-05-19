@@ -10,8 +10,7 @@ Route::view('/postulante_nuevo', 'postulante_nuevo')->name('postulante_nuevo');
 
 // Vistas estáticas
 Route::view('/ingresos', 'ingresos')->name('ingresos');
-Route::view('/postulante', 'postulante')->name('postulante');
-Route::view('/empresa', 'empresa')->name('empresa');
+Route::view('/empresa', 'empresa_nuevo')->name('empresa_nuevo');
 
 // Carga y guardado de postulantes
 Route::get('/postulantes', [PostulanteController::class, 'create'])->name('postulante.create');
