@@ -7,7 +7,7 @@
 
     <div class="flex-1 max-w-50xl mx-auto px-4 py-8 rounded-lg shadow">
     <h1 class="text-2xl font-bold text-center mb-6"> Formulario Nuevo Postulante</h1>
-    </div>
+    
     <div class=""">
     <form id="postulanteForm" action="{{ route('postulante.store') }}" method="POST" class="space-y-100">
         @csrf
@@ -84,7 +84,7 @@
   <select name="tipo_carnet" id="tipo_carnet" class="w-full border border-gray-300 rounded px-3 py-2">//agregar tipo de carnet
     <option value="">Seleccione una opción</option>
     <option value="A">A ()</option>
-    
+
     <option value="B">B ()</option>
     
     <option value="C">C ()</option>

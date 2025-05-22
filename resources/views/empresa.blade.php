@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="min-h-screen flex items-center justify-center bg-gray-100">
+<div class="min-h-screen items-center justify-center bg-gray-100">
     <div class="max-w-md w-full p-8 bg-white rounded-lg shadow-md text-center">
         <h1 class="text-3xl font-bold text-gray-800 mb-8"> Menú de Empresa</h1>
 
