@@ -23,7 +23,7 @@
     </nav>
 
     {{-- Contenido dinámico --}}
-    <main class="flex-1 max-w-7xl mx-auto px-4 py-8">
+    <main class="flex-1 max-w-7xl mx-auto px-4 py-8 ">
         @yield('content')
     </main>
 
