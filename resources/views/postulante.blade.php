@@ -1,32 +1,29 @@
 <!-- resources/views/postulante.blade.php -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Postulante – Municipalidad</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 0; padding: 0; }
-    .container { max-width: 500px; margin: 5rem auto; padding: 1.5rem; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; }
-    h1 { margin-bottom: 2rem; font-size: 1.8rem; color: #333; }
-    .buttons { display: flex; flex-direction: column; gap: 1rem; }
-    .btn { display: inline-block; padding: 1rem 2rem; font-size: 1rem; color: #fff; background-color: #007BFF; text-decoration: none; border-radius: 5px; transition: background 0.3s; }
-    .btn:hover { background-color: #0056b3; }
-    .btn-update { background-color: #28a745; }
-    .btn-update:hover { background-color: #1e7e34; }
-    .back { margin-top: 2rem; display: inline-block; color: #555; text-decoration: none; font-size: 0.9rem; }
-    .back:hover { text-decoration: underline; }
-    .back .arrow { margin-right: 0.5rem; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Postulante</h1>
-    <div class="buttons">
-      <a href="{{ route('postulante_nuevo') }}" class="btn">NUEVO</a>
-      <a href="{{ route('index') }}" class="btn btn-update">ACTUALIZAR</a>
+@extends('layouts.app')
+
+@section('title', 'Postulante - Municipalidad')
+
+@section('content')
+<div class="min-h-screen items-center justify-center bg-gray-100 px-4">
+    <div class="bg-white p-10 rounded-2xl shadow-xl max-w-xl w-full text-center">
+        <h1 class="text-4xl font-bold text-gray-800 mb-10">Menú de Postulantes</h1>
+
+        <div class="flex flex-col gap-6 mb-8">
+            <a href="{{ route('postulante_nuevo') }}"
+               class="w-full py-4 px-6 bg-blue-600 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
+                ➕ NUEVO
+            </a>
+            <a href="{{ route('index') }}"
+               class="w-full py-4 px-6 bg-green-600 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-green-700 transition duration-300">
+                🔄 ACTUALIZAR
+            </a>
+        </div>
+
+        <a href="{{ route('ingresos') }}"
+           class="text-base text-gray-500 hover:text-gray-800  font-semibold transition duration-200">
+            &larr; Volver
+        </a>
     </div>
-    <a href="{{ route('ingresos') }}" class="back"><span class="arrow">&larr;</span>Volver</a>
-  </div>
-</body>
-</html>
+</div>
+
+@endsection
