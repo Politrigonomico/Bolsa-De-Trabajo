@@ -2,7 +2,6 @@
 @section('title', 'Portal de CV – Municipalidad')
 
 @section('content')
-<body>
     <div class="container">
         <h1>Portal de CV – Municipalidad</h1>
         <div class="buttons">
@@ -16,6 +15,4 @@
             </a>
         </div>
     </div>
-</body>
-</html>
 @endsection

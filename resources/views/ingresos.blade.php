@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Portal de CV – Municipalidad')
 
-<body>
+@section( 'content')
     <div class="container">
         <h1>Ingresos</h1>
         <div class="buttons">
@@ -10,5 +10,4 @@
         </div>
         <a href="{{ route('index') }}" class="back">&larr; Volver</a>
     </div>
-</body>
-</html>
+@endsection
