@@ -1,19 +1,31 @@
-<!-- resources/views/index.blade.php -->
 @extends('layouts.app')
 
-@section('title', 'Portal de CV')
+@section( 'title', 'Portal de CV-Municipalidad')
 
 @section('content')
-  <div class="max-w-md mx-auto mt-20 bg-white rounded-2xl shadow p-6 text-center">
-    <h1 class="text-3xl font-semibold text-gray-800 mb-8">Portal de CV – Municipalidad</h1>
-    <div class="flex justify-center gap-4 flex-wrap">
-      <a href="{{ route('ingresos') }}" class="px-6 py-3 bg-blue-500 text-white rounded-lg text-lg hover:bg-blue-600 transition">INGRESOS</a>
-      <a href="{{ route('busqueda') }}" class="px-6 py-3 bg-green-500 text-white rounded-lg text-lg hover:bg-green-600 transition">BÚSQUEDAS</a>
+
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="bg-white shadow-xl rounded-2xl p-10 max-w-xl w-full text-center">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">Portal de CV-Municipalidad</h1>
+
+        <div class="flex flex-col gap-6">
+            <a href="{{ route('ingresos') }}"
+                class="w-full py-4 px-6 bg-blue-600 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
+                📥 INGRESOS
+            </a>
+
+            <a href="{{ route('busqueda') }}"
+                class="w-full py-4 px-6 bg-green-600 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-green-700 transition duration-300">
+                🔍 BÚSQUEDAS
+            </a>
+        </div>
+
+        <div class="mt-8">
+            <a href="{{ route('index') }}"
+                class="text-sm text-gray-500 hover:text-gray-800 transition duration-200">
+                ⚙️ CONFIGURACIONES
+            </a>
+        </div>
     </div>
-    <div class="mt-12">
-      <a href="{{ route('index') }}" class="inline-flex items-center text-gray-600 hover:text-gray-800 text-sm">
-        <span class="mr-2 text-xl">⚙️</span>CONFIGURACIONES
-      </a>
-    </div>
-  </div>
+</div>
 @endsection

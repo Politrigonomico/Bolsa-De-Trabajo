@@ -1,17 +1,26 @@
-<!-- resources/views/ingresos.blade.php -->
 @extends('layouts.app')
-
-@section('title', 'Ingresos')
+@section('title', 'Portal de CV – Municipalidad')
 
 @section('content')
-  <div class="max-w-md mx-auto mt-20 bg-white rounded-2xl shadow p-6 text-center">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">Ingresos</h1>
-    <div class="flex flex-col gap-4">
-      <a href="{{ route('postulante_nuevo') }}" class="px-6 py-3 bg-blue-500 text-white rounded-lg text-lg hover:bg-blue-600 transition">CREAR POSTULANTE</a>
-      <a href="{{ route('empresa_nuevo') }}" class="px-6 py-3 bg-green-500 text-white rounded-lg text-lg hover:bg-green-600 transition">CREAR EMPRESA</a>
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="bg-white p-10 rounded-2xl shadow-lg max-w-md w-full text-center">
+        <h1 class="text-3xl font-bold text-gray-800 justify-center mb-8">Ingresos</h1>
+
+        <div class="flex flex-col gap-4 mb-6">
+            <a href="{{ route('postulante_nuevo') }}"
+               class="w-full py-3 px-6 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300 shadow-md">
+                   CREAR POSTULANTE
+            </a>
+            <a href="{{ route('empresa_nuevo') }}"
+               class="w-full py-3 px-6 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition duration-300 shadow-md">
+                    CREAR EMPRESA
+            </a>
+        </div>
+
+        <a href="{{ route('index') }}"
+           class="text-sm text-gray-500 hover:text-gray-800 transition duration-200">
+            &larr; Volver
+        </a>
     </div>
-    <a href="{{ route('index') }}" class="mt-8 inline-flex items-center text-gray-600 hover:text-gray-800 text-sm">
-      <span class="mr-2 text-xl">&larr;</span>Volver
-    </a>
-  </div>
+</div>
 @endsection

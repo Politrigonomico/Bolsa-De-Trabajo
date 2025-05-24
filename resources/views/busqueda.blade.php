@@ -1,43 +1,36 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Postulantes</title>
-  <style>
-    body { font-family: sans-serif; padding: 2rem; background: #f2f2f2; }
-    table { width: 100%; border-collapse: collapse; margin-top: 2rem; background: white; }
-    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
-    th { background: #007bff; color: white; }
-  </style>
-</head>
-<body>
-  <h1>Listado de Postulantes</h1>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>DNI</th>
-        <th>Email</th>
-        <th>Teléfono</th>
-        <th>Localidad</th>
-        <th>Profesión</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach($postulantes as $postulante)
-        <tr>
-          <td>{{ $postulante->nombre }}</td>
-          <td>{{ $postulante->apellido }}</td>
-          <td>{{ $postulante->dni }}</td>
-          <td>{{ $postulante->email }}</td>
-          <td>{{ $postulante->telefono }}</td>
-          <td>{{ $postulante->localidad }}</td>
-          <td>{{ $postulante->profesion ?? 'N/A' }}</td>
+  @extends('layouts.app')
+  @section('title', 'Busqueda – Municipalidad')
+<body class="bg-gray-100 p-8 font-sans">
+  <h1 class="text-2xl font-bold text-gray-800 mb-6">Listado de Postulantes</h1>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-300 shadow-sm">
+      <thead>
+        <tr class="bg-blue-600 text-white">
+          <th class="px-4 py-2 text-left">Nombre</th>
+          <th class="px-4 py-2 text-left">Apellido</th>
+          <th class="px-4 py-2 text-left">DNI</th>
+          <th class="px-4 py-2 text-left">Email</th>
+          <th class="px-4 py-2 text-left">Teléfono</th>
+          <th class="px-4 py-2 text-left">Localidad</th>
+          <th class="px-4 py-2 text-left">Profesión</th>
         </tr>
-      @endforeach
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        @foreach($postulantes as $postulante)
+          <tr class="border-t border-gray-200 hover:bg-gray-100">
+            <td class="px-4 py-2">{{ $postulante->nombre }}</td>
+            <td class="px-4 py-2">{{ $postulante->apellido }}</td>
+            <td class="px-4 py-2">{{ $postulante->dni }}</td>
+            <td class="px-4 py-2">{{ $postulante->email }}</td>
+            <td class="px-4 py-2">{{ $postulante->telefono }}</td>
+            <td class="px-4 py-2">{{ $postulante->localidad }}</td>
+            <td class="px-4 py-2">{{ $postulante->profesion ?? 'N/A' }}</td>
+          </tr>
+        @endforeach
+      </tbody>
+    </table>
+  </div>
 </body>
-</html>
+@endsection
