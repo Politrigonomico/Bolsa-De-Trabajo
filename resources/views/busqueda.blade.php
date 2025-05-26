@@ -1,6 +1,8 @@
 
   @extends('layouts.app')
   @section('title', 'Busqueda – Municipalidad')
+  @section('content')
+
 <body class="bg-gray-100 p-8 font-sans">
   <h1 class="text-2xl font-bold text-gray-800 mb-6">Listado de Postulantes</h1>
 
