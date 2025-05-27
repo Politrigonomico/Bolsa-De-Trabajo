@@ -21,7 +21,7 @@
         </div>
 
         <div class="mt-8">
-            <a href="{{ route('index') }}"
+            <a href="{{ route('configuracion') }}"
                 class="text-sm text-gray-500 hover:text-gray-800 transition duration-200">
                 ⚙️ CONFIGURACIONES
             </a>

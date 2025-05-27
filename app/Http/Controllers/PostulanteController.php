@@ -2,67 +2,91 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Postulante;
-use App\Models\Titulos;
-use App\Models\Carnet;
 use App\Models\Rubros;
-use App\Models\Empresas;
-
+use Illuminate\Http\Request;
 
 class PostulanteController extends Controller
 {
     public function index()
     {
+        // Aquí puedes implementar la lógica para mostrar la lista de postulantes
         $postulantes = Postulante::all();
         return view('busqueda', compact('postulantes'));
     }
 
     public function create()
     {
-        // Para completar los select en el formulario
-        $titulos = Titulos::all();
-        $carnets = Carnet::all();
+        // Aquí puedes implementar la lógica para mostrar el formulario de creación de un nuevo postulante
         $rubros = Rubros::all();
-        $empresas = Empresas::all();
-
-        return view('postulante_nuevo', compact('titulos', 'carnets', 'rubros', 'empresas'));
+        return view('postulante_nuevo', compact('rubros'));
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nombre' => 'required|string|max:250',
-            'apellido' => 'required|string|max:250',
-            'dni' => 'required|digits_between:7,8|unique:postulantes,dni',
-            'cuil' => 'required|string|max:13',
-            'telefono' => 'required|string|max:20',
-            'celular' => 'required|string|max:20',
-            'mail' => 'required|email|max:250',
-            'domicilio' => 'required|string|max:250',
-            'ciudad' => 'required|string|max:250',
-            'nacimiento' => 'required|date',
-            'titulo' => 'required|exists:titulos,titulo',
-            'cursos' => 'nullable|string|max:250',
-            'observacionEdu' => 'nullable|string|max:250',
-            'rubro' => 'required|exists:rubros,rubro',
-            'experiencia' => 'nullable|string|max:250',
-            'empleado' => 'required|boolean',
-            'tipoEmpleo' => 'required|string|max:250',
-            'empresa' => 'required|exists:empresas,razonSocial',
-            'carnet' => 'required|exists:carnets,carnetTipo',
-            'observacionCarnet' => 'nullable|string|max:250',
-            'idiomas' => 'required|boolean',
-            'observacionIdioma' => 'nullable|string|max:250',
-            'practica' => 'required|boolean',
-            'pasante' => 'required|boolean',
-            'vigencia' => 'required|date'
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'dni' => 'required|integer|unique:postulantes,dni',
+            'telefono' => 'required|integer',
+            'email' => 'required|email|unique:postulantes,email',
+            'domicilio' => 'required|string|max:255',
+            'localidad' => 'required|string|max:255',
+            'estado_civil' => 'required|string|max:255',
+            'profesion' => 'nullable|string|max:255',
+            'experiencia_laboral' => 'nullable|string|max:255',
+            'estudios_cursados' => 'nullable|string|max:255',
+            'carnet_conducir' => 'boolean',
+            'movilidad_propia' => 'boolean',
+            'sexo' => 'string|max:10',
+            'fecha_nacimiento' => 'required|date',
+            'rubro' => 'required|string|exists:rubros,rubro'
         ]);
+        // Convertir el texto de rubro en su ID
+        $rubro = Rubros::where('rubro', $request['rubro'])->first();
+        $request['rubro_id'] = $rubro->id;
+        unset($request['rubro']);
+
+        Postulante::create([
+            'nombre' => $request->nombre,
+            'apellido' => $request->apellido,
+            'dni' => $request->dni,
+            'telefono' => $request->telefono,
+            'email' => $request->email,
+            'domicilio' => $request->domicilio,
+            'localidad' => $request->localidad,
+            'estado_civil' => $request->estado_civil,
+            'profesion' => $request->profesion,
+            'experiencia_laboral' => $request->experiencia_laboral,
+            'estudios_cursados' => $request->estudios_cursados,
+            'carnet_conducir' => $request->carnet_conducir,
+            'movilidad_propia' => $request->movilidad_propia,
+            'sexo' => $request->sexo,
+            'fecha_nacimiento' => $request->fecha_nacimiento,
+            'rubro_id' => $rubro->id,
+        ]);
+        return redirect()->route('postulante_nuevo')->with('success', 'Postulante creado exitosamente.');
+    }
 
 
 
-        Postulante::create($validated);
+    public function show($id)
+    {
+        // Aquí puedes implementar la lógica para mostrar un postulante específico
+    }
 
-        return redirect()->route('postulante_nuevo')->with('success', 'Postulante registrado con éxito');
+    public function edit($id)
+    {
+        // Aquí puedes implementar la lógica para mostrar el formulario de edición de un postulante específico
+    }
+
+    public function update(Request $request, $id)
+    {
+        
+    }
+
+    public function destroy($id)
+    {
+        // Aquí puedes implementar la lógica para eliminar un postulante específico de la base de datos
     }
 }
