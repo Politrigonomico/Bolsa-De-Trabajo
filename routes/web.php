@@ -11,7 +11,6 @@ Route::view('/', 'index')->name('index');
 Route::view('/ingresos', 'ingresos')->name('ingresos');
 Route::view('/empresa_nuevo', 'empresa_nuevo')->name('empresa_nuevo');
 
-// ---- QUITAR o COMENTAR ESTA LÍNEA ----
 // Route::view('/postulante_nuevo', 'postulante_nuevo')->name('postulante_nuevo');
 
 // Ahora redirigimos todo a tu controlador:
