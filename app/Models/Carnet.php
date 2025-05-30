@@ -9,7 +9,7 @@ class Carnet extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'carnetTipo',
+        'tipo_carnet',
     ];
     //
 }
