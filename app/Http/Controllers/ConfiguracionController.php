@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Rubros;
+use App\Models\Rubro;
 
 class ConfiguracionController extends Controller
 {
@@ -34,7 +34,7 @@ class ConfiguracionController extends Controller
             'rubro' => 'required|string|max:255|unique:rubros,rubro',
         ], $messages);
 
-        Rubros::create($data);
+        Rubro::create($data);
 
         return redirect()
             ->route('configuracion')
