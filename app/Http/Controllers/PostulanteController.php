@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Postulante;
+use App\Models\Postulantes;
 use App\Models\Rubros;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,7 @@ class PostulanteController extends Controller
     public function index()
     {
         // Aquí puedes implementar la lógica para mostrar la lista de postulantes
-        $postulantes = Postulante::all();
+        $postulantes = Postulantes::all();
         return view('busqueda', compact('postulantes'));
     }
 
@@ -47,7 +48,7 @@ class PostulanteController extends Controller
         $request['rubro_id'] = $rubro->id;
         unset($request['rubro']);
 
-        Postulante::create([
+        Postulantes::create([
             'nombre' => $request->nombre,
             'apellido' => $request->apellido,
             'dni' => $request->dni,

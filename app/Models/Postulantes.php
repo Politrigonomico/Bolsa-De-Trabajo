@@ -10,9 +10,9 @@ class Postulantes extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nombre', 'apellido', 'dni', 'cuil', 'telefono', 'celular', 'mail',
+        'nombre', 'apellido', 'dni', 'cuil', 'telefono', 'email',
         'domicilio', 'ciudad', 'nacimiento', 'titulo_id', 'cursos', 'observacionEdu',
-        'rubro_id', 'experiencia', 'empleado', 'tipoEmpleo',
+        'rubro_id', 'experiencia_laboral', 
         'empresa_id', 'carnet_id', 'observacionCarnet',
         'idiomas', 'observacionIdioma', 'practica', 'pasante', 'vigencia'
     ];
