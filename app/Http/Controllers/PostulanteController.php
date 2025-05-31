@@ -11,10 +11,84 @@ use App\Models\Rubro;
 
 class PostulanteController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        // 1. Traigo todos los rubros (por si los vas a necesitar en la vista)
         $rubros = Rubro::all();
-        $postulantes = Postulante::latest()->get();
+
+        // 2. Empiezo con un Query Builder sobre Postulante (con la relación 'rubro')
+        $query = Postulante::with('rubro');
+
+        // 3. Filtro por Nombre (si vino el parámetro 'nombre' no vacío)
+        if ($request->filled('nombre')) {
+            $query->where('nombre', 'like', '%'.$request->nombre.'%');
+        }
+
+        // 4. Filtro por Apellido
+        if ($request->filled('apellido')) {
+            $query->where('apellido', 'like', '%'.$request->apellido.'%');
+        }
+
+        // 5. Filtro por Profesión (Rubro) usando relación
+        if ($request->filled('rubro')) {
+            $query->whereHas('rubro', function($q) use ($request) {
+                $q->where('rubro', 'like', '%'.$request->rubro.'%');
+            });
+        }
+
+        // 6. FILTRO POR RANGO DE EDAD (edad_min Y edad_max)
+        $edadMin = $request->input('edad_min');
+        $edadMax = $request->input('edad_max');
+
+        // Convertir a enteros solo si vienen llenos
+        $tieneMin = is_numeric($edadMin) && $edadMin !== '';
+        $tieneMax = is_numeric($edadMax) && $edadMax !== '';
+
+        if ($tieneMin && $tieneMax) {
+            // Ambos extremos definidos: buscamos quienes tengan edad entre edad_min y edad_max (inclusive).
+            // a) Fecha de corte máxima: hace edad_min años exactos (endOfDay)
+            $fechaMax = Carbon::now()->subYears((int)$edadMin)->endOfDay();
+            // b) Fecha de corte mínima: hace (edad_max + 1) años, pero sumarle un día para excluir el cumpleaños exacto de edad_max+1
+            //    Así evitamos incluir a quienes ya cumplen edad_max+1.
+            $fechaMin = Carbon::now()
+                          ->subYears((int)$edadMax + 1)
+                          ->addDay()
+                          ->startOfDay();
+
+            $query->whereBetween('fecha_nacimiento', [$fechaMin, $fechaMax]);
+        }
+        elseif ($tieneMin) {
+            // Solo se definió edad_min: traemos quienes tengan edad >= edad_min
+            $fechaMax = Carbon::now()->subYears((int)$edadMin)->endOfDay();
+            // fecha_nacimiento <= fechaMax
+            $query->where('fecha_nacimiento', '<=', $fechaMax);
+        }
+        elseif ($tieneMax) {
+            // Solo se definió edad_max: traemos quienes tengan edad <= edad_max
+            // Fecha mínima para edad_max: hace (edad_max + 1) años, +1 día (para excluir edad_max+1 exacto)
+            $fechaMin = Carbon::now()
+                          ->subYears((int)$edadMax + 1)
+                          ->addDay()
+                          ->startOfDay();
+            // fecha_nacimiento >= fechaMin
+            $query->where('fecha_nacimiento', '>=', $fechaMin);
+        }
+
+        // 7. Filtro por Tipo de Carnet
+        if ($request->filled('tipo_carnet')) {
+            $query->where('tipo_carnet', 'like', '%'.$request->tipo_carnet.'%');
+        }
+
+        // 8. Filtro por Certificado de Manipulación de Alimentos
+        //    Usamos filled() porque '0' o '1' no se consideran vacíos
+        if ($request->filled('certificado_check')) {
+            $query->where('certificado_check', $request->certificado_check);
+        }
+
+        // 9. Ordeno los resultados y obtengo la colección
+        $postulantes = $query->latest()->get();
+
+        // 10. Retorno la vista con postulantes (filtrados o no) y rubros
         return view('busqueda', compact('postulantes', 'rubros'));
     }
 
