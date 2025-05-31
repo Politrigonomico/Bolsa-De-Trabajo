@@ -258,13 +258,27 @@
 
                                     {{-- Profesión / Rubro --}}
                                     <div>
-                                        <label class="block font-semibold text-gray-700">Profesión</label>
+                                        <label class="block font-semibold text-gray-700">Profesión (Rubro)</label>
+
+                                        {{-- Input que se vincula con el datalist --}}
                                         <input
-                                            type="text"
+                                            list="rubros-list-{{ $postulante->id }}"
                                             name="rubro"
-                                            value="{{ optional($postulante->rubro)->rubro ?? '' }}"
+                                            value="{{ old('rubro', optional($postulante->rubro)->rubro) }}"
+                                            placeholder="Elegí o escribí"
                                             class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                                         >
+
+                                        {{-- Datalist que recorre todos los rubros y arma las opciones --}}
+                                        <datalist id="rubros-list-{{ $postulante->id }}">
+                                            @foreach($rubros as $r)
+                                                <option value="{{ $r->rubro }}"></option>
+                                            @endforeach
+                                        </datalist>
+
+                                        @error('rubro')
+                                            <span class="text-red-600 text-sm">{{ $message }}</span>
+                                        @enderror
                                     </div>
 
                                     {{-- Localidad --}}

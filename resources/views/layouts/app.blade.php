@@ -52,10 +52,14 @@
         </div>
     </nav>
 
-    {{-- Contenido dinámico --}}
-    <main class="flex-1 max-w-7xl mx-auto px-4 py-8">
+    {{-- Contenedor principal --}}
+    <div class="flex-1 max-w-7xl mx-auto px-4 py-8">
+        {{-- Aquí incluimos el partial que muestra los mensajes flash --}}
+        @include('partials.flash-messages')
+
+        {{-- Contenido específico de cada vista --}}
         @yield('content')
-    </main>
+    </div>
 
     {{-- Footer --}}
     <footer class="bg-indigo-700 text-white py-4 text-center text-sm">

@@ -169,37 +169,73 @@ class PostulanteController extends Controller
         $rubros = Rubro::all();
         return view('busqueda', compact('postulante', 'rubros'));
     }
-    public function update(Request $request, Postulante $postulante, $id)
+
+    public function update(Request $request, $id)
     {
+        // 1) Buscamos el postulante
         $postulante = Postulante::findOrFail($id);
 
+        // 2) Validamos solo los campos que envía el formulario
         $validated = $request->validate([
-            'nombre' => 'required|string|max:250',
-            'apellido' => 'required|string|max:250',
-            'dni' => 'required|integer|unique:postulantes,dni,' . $postulante->id,
-            'telefono' => 'required|string|max:20',
-            'email' => 'required|email|max:250|unique:postulantes,email,' . $postulante->id,
-            'domicilio' => 'required|string|max:250',
-            'localidad' => 'required|string|max:250',
-            'fecha_nacimiento' => 'required|date',
-            'estado_civil' => 'nullable|string|max:50',
-            'rubro_id' => 'required|exists:rubros,id',
-            'experiencia_laboral' => 'nullable|string|max:250',
-            'estudios_cursados' => 'nullable|string|max:250',
-            'certificado_check' => 'nullable|boolean',
-            'carnet_check' => 'nullable|boolean',
-            'tipo_carnet' => 'nullable|string|max:100',
-            'movilidad_propia' => 'nullable|boolean',
-            'sexo' => 'nullable|string|max:10',
+            'nombre'              => 'required|string|max:250',
+            'apellido'            => 'required|string|max:250',
+            // El DNI debe ser único excepto en el registro actual:
+            'dni'                 => 'required|integer|unique:postulantes,dni,' . $postulante->id,
+            'fecha_nacimiento'    => 'required|date',
+            'email'               => 'nullable|email|max:250|unique:postulantes,email,' . $postulante->id,
+            'rubro'               => 'required|string|exists:rubros,rubro',
+            'localidad'           => 'nullable|string|max:250',
+            'tipo_carnet'         => 'nullable|string|max:100',
+            // Aquí validamos que venga "0" o "1". Si es otro valor, falla.
+            'certificado_check'   => 'nullable|in:0,1',
         ]);
 
-        $validated['certificado_check'] = $request->has('certificado_check');
-        $validated['carnet_check'] = $request->has('carnet_check');
-        $validated['movilidad_propia'] = $request->has('movilidad_propia');
+        // 3) Asignamos valores simples directamente
+        $postulante->nombre           = $validated['nombre'];
+        $postulante->apellido         = $validated['apellido'];
+        $postulante->dni              = $validated['dni'];
+        $postulante->fecha_nacimiento = $validated['fecha_nacimiento'];
+        $postulante->email            = $validated['email'] ?? null;
+        $postulante->localidad        = $validated['localidad'] ?? null;
+        $postulante->tipo_carnet      = $validated['tipo_carnet'] ?? null;
 
-        $postulante->update($validated);
+        // 4) Asignamos certificado_check usando directamente el valor enviado ("1" o "0").
+        //    Si no viene, asumimos "0".
+        $postulante->certificado_check = $request->input('certificado_check', 0);
 
-        return redirect()->route('busqueda')->with('success', 'Postulante actualizado correctamente.');
+        // 5) Convertimos el texto "rubro" en su correspondiente ID
+        if (!empty($validated['rubro'])) {
+            $rubroObj = Rubro::where('rubro', $validated['rubro'])->first();
+            if ($rubroObj) {
+                $postulante->rubro_id = $rubroObj->id;
+            } else {
+                $postulante->rubro_id = null;
+            }
+        } else {
+            $postulante->rubro_id = null;
+        }
+
+        // 6) Guardamos los cambios
+        $postulante->save();
+
+        // 7) Redirigimos al listado
+        return redirect()
+            ->route('busqueda')
+            ->with('success', 'Postulante actualizado correctamente.');
+    }
+
+    public function destroy($id)
+    {
+        // 1) Buscamos el postulante
+        $postulante = Postulante::findOrFail($id);
+
+        // 2) Eliminamos el postulante
+        $postulante->delete();
+
+        // 3) Redirigimos al listado con mensaje de éxito
+        return redirect()
+            ->route('busqueda')
+            ->with('success', 'Postulante eliminado correctamente.');
     }
 
 }
