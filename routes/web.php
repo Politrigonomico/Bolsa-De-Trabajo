@@ -40,8 +40,7 @@ Route::view('empresa_nuevo', 'empresa_nuevo')->name('empresa_nuevo');
 Route::get('empresas/create', [EmpresaController::class, 'create'])
     ->name('empresas.create');
 
-Route::post('empresas', [EmpresaController::class, 'store'])
-    ->name('empresas.store');
+Route::post('/empresa', [EmpresaController::class, 'store'])->name('empresa.store');
 
-Route::get('empresas', [EmpresaController::class, 'index'])
-    ->name('empresas.index');
+
+Route::get('/empresa', [EmpresaController::class, 'index'])->name('empresa.index');

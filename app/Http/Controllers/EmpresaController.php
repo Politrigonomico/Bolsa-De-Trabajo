@@ -12,7 +12,8 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        //
+        $empresas = \App\Models\Empresa::latest()->get();
+        return view('empresa_nuevo', compact('empresas'));
     }
 
     /**
@@ -28,22 +29,24 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $validated = $request->validate([
             'razon_social'    => 'required|string|max:255',
-            'cuit'            => 'required|string|unique:empresas,cuit',
+            'cuit'            => 'required|string|max:50|unique:empresas,cuit',
             'rubro_empresa'   => 'required|string|max:255',
             'contacto'        => 'required|string|max:255',
             'telefono'        => 'required|string|max:50',
-            'email'           => 'required|email|unique:empresas,email',
-            'observacion'     => 'nullable|string',
+            'email'            => 'required|email|max:255|unique:empresas,email',
+            'observacion'     => 'nullable|string|max:500',
         ]);
 
-        Empresa::create($data);
+        // Crear la empresa
+        \App\Models\Empresa::create($validated);
 
+        // Redirigir a la lista con mensaje de éxito
         return redirect()
-            ->route('empresas_nuevo')
-            ->with('success', 'Empresa guardada correctamente.');
-        }
+            ->route('empresa.index')
+            ->with('success', 'Empresa creada correctamente.');
+    }
 
     /**
      * Display the specified resource.
