@@ -15,11 +15,11 @@ class Titulos extends Model
 
     public function postulantes()
     {
-        return $this->hasMany(Postulantes::class);
+        return $this->hasMany(Postulante::class);
     }
 
     public function empresas()
     {
-        return $this->hasMany(Empresas::class);
+        return $this->hasMany(Empresa::class);
     }
 }
