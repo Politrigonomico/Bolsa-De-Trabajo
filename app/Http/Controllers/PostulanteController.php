@@ -6,8 +6,6 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Postulante;
-use App\Models\Postulantes;
-use App\Models\Rubros;
 use Illuminate\Http\Request;
 use App\Models\Rubro; 
 
@@ -18,9 +16,6 @@ class PostulanteController extends Controller
         $rubros = Rubro::all();
         $postulantes = Postulante::latest()->get();
         return view('busqueda', compact('postulantes', 'rubros'));
-        // Aquí puedes implementar la lógica para mostrar la lista de postulantes
-        $postulantes = Postulantes::all();
-        return view('busqueda', compact('postulantes'));
     }
 
 
@@ -93,32 +88,6 @@ class PostulanteController extends Controller
         $postulantes = $query->latest()->get();
 
         return view('busqueda', compact('postulantes'));
-            'rubro' => 'required|string|exists:rubros,rubro'
-        ]);
-        // Convertir el texto de rubro en su ID
-        $rubro = Rubros::where('rubro', $request['rubro'])->first();
-        $request['rubro_id'] = $rubro->id;
-        unset($request['rubro']);
-
-        Postulantes::create([
-            'nombre' => $request->nombre,
-            'apellido' => $request->apellido,
-            'dni' => $request->dni,
-            'telefono' => $request->telefono,
-            'email' => $request->email,
-            'domicilio' => $request->domicilio,
-            'localidad' => $request->localidad,
-            'estado_civil' => $request->estado_civil,
-            'profesion' => $request->profesion,
-            'experiencia_laboral' => $request->experiencia_laboral,
-            'estudios_cursados' => $request->estudios_cursados,
-            'carnet_conducir' => $request->carnet_conducir,
-            'movilidad_propia' => $request->movilidad_propia,
-            'sexo' => $request->sexo,
-            'fecha_nacimiento' => $request->fecha_nacimiento,
-            'rubro_id' => $rubro->id,
-        ]);
-        return redirect()->route('postulante_nuevo')->with('success', 'Postulante creado exitosamente.');
     }
 
     public function edit(Postulante $postulante)

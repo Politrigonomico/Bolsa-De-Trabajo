@@ -11,6 +11,7 @@
     <form id="postulanteForm" action="{{ route('postulante.store') }}" method="POST" class="grid grid-cols-2 gap-4">
         @csrf
 
+        {{-- -------------------- Campos básicos -------------------- --}}
         <div>
             <label for="nombre" class="block font-medium mb-1">Nombre</label>
             <input id="nombre" type="text" name="nombre" placeholder="Nombre" class="border p-2 rounded w-full" required value="{{ old('nombre') }}">
@@ -89,29 +90,51 @@
             @enderror
         </div>
 
+        {{-- ------------- SECCIÓN RUBRO: AHORA CON DATALIST ------------ --}}
         <div class="col-span-2">
-            <label for="rubro_id" class="block font-medium mb-1">Rubro</label>
-            <select
-                name="rubro_id"
-                id="rubro_id"
-                class="w-full p-2 border rounded"
+            <label for="rubro" class="block font-medium mb-1">Rubro</label>
+
+            <!-- Input que muestra el datalist -->
+            <input
+                type="text"
+                id="rubro"
+                name="rubro"
+                list="rubros"
+                class="border p-2 rounded w-full"
+                placeholder="Empiece a tipear y seleccione..."
+                value="{{ old('rubro') }}"
+                autocomplete="off"
                 required
             >
-                <option value="">Seleccione un rubro</option>
+            
+            <!-- Datalist con cada opción llevando data-id="{ $item->id } -->
+            <datalist id="rubros">
                 @foreach($rubros as $item)
-                    <option value="{{ $item->id }}" {{ old('rubro_id') == $item->id ? 'selected' : '' }}>
-                        {{ $item->rubro }}
-                    </option>
+                    <option data-id="{{ $item->id }}" value="{{ $item->rubro }}"></option>
                 @endforeach
-            </select>
+            </datalist>
+
+            <!-- Campo oculto para enviar el rubro_id real -->
+            <input
+                type="hidden"
+                name="rubro_id"
+                id="rubro_id_hidden"
+                value="{{ old('rubro_id') }}"
+            >
+
             @error('rubro_id')
+                <span class="text-red-600 text-sm">{{ $message }}</span>
+            @enderror
+            @error('rubro')
+                {{-- En caso de validar el nombre de rubro --}}
                 <span class="text-red-600 text-sm">{{ $message }}</span>
             @enderror
         </div>
 
+        {{-- ------------ EXPERIENCIA LABORAL Y ESTUDIOS CURSADOS ------------ --}}
         <div>
             <label for="experiencia_laboral" class="block font-medium mb-1">Experiencia Laboral</label>
-            <input id="experiencia_laboral" type="text" name="experiencia_laboral" placeholder="Experiencia Laboral" class="border p-2 rounded w-full" value="{{ old('experiencia_laboral') }}">
+            <textarea id="experiencia_laboral" name="experiencia_laboral" class="border p-2 rounded w-full h-32" placeholder="Describa su experiencia laboral">{{ old('experiencia_laboral') }}</textarea>
             @error('experiencia_laboral')
                 <span class="text-red-600 text-sm">{{ $message }}</span>
             @enderror
@@ -119,16 +142,18 @@
 
         <div>
             <label for="estudios_cursados" class="block font-medium mb-1">Estudios Cursados</label>
-            <input id="estudios_cursados" type="text" name="estudios_cursados" placeholder="Estudios Cursados" class="border p-2 rounded w-full" value="{{ old('estudios_cursados') }}">
+            <textarea id="estudios_cursados" name="estudios_cursados" class="border p-2 rounded w-full h-32" placeholder="Detalle sus estudios cursados">{{ old('estudios_cursados') }}</textarea>
             @error('estudios_cursados')
                 <span class="text-red-600 text-sm">{{ $message }}</span>
             @enderror
         </div>
+        
+        {{-- -------------------- CAMPOS CHECKBOX -------------------- --}}
 
         <div class="col-span-2 flex flex-wrap items-center gap-4 mt-2">
             <div class="flex items-center">
                 <input id="certificado_check" type="checkbox" name="certificado_check" value="1" {{ old('certificado_check') ? 'checked' : '' }} class="mr-1">
-                <label for="certificado_check">Certificado</label>
+                <label for="certificado_check">Certif. Manipular alimentos</label>
             </div>
 
             <div class="flex items-center">
@@ -136,14 +161,7 @@
                 <label for="carnet_check">Carnet</label>
             </div>
 
-            <input
-                id="tipo_carnet"
-                type="text"
-                name="tipo_carnet"
-                placeholder="Tipo de carnet"
-                class="border p-2 rounded flex-1"
-                value="{{ old('tipo_carnet') }}"
-                style="display:none;"
+            <input id="tipo_carnet" type="text" name="tipo_carnet" placeholder="Tipo de carnet" class="border p-2 rounded flex-1" value="{{ old('tipo_carnet') }}" style="display:none;"
             >
 
             <div class="flex items-center">
@@ -172,13 +190,14 @@
 </div>
 
 <script>
+    // Al enviar el formulario, muestro una alerta (igual que antes)
     document.getElementById('postulanteForm').addEventListener('submit', function () {
         alert('Formulario enviado. El postulante será registrado si los datos son correctos.');
     });
 
+    // Lógica de mostrar/ocultar campo "Tipo de carnet"
     const carnetCheck = document.getElementById('carnet_check');
     const tipoCarnetInput = document.getElementById('tipo_carnet');
-
     function toggleTipoCarnet() {
         if (carnetCheck.checked) {
             tipoCarnetInput.style.display = 'block';
@@ -189,12 +208,37 @@
             tipoCarnetInput.value = '';
         }
     }
-
     carnetCheck.addEventListener('change', toggleTipoCarnet);
+    window.addEventListener('DOMContentLoaded', toggleTipoCarnet);
 
-    // Mostrar/ocultar al cargar la página (considerando old values)
-    window.addEventListener('DOMContentLoaded', (event) => {
-        toggleTipoCarnet();
-    });
+    // -------------- Manejo de Rubro / Datalist --------------
+    const rubroInput      = document.getElementById('rubro');
+    const datalistOptions = document.querySelectorAll('#rubros option');
+    const rubroIdHidden   = document.getElementById('rubro_id_hidden');
+
+    // Función que busca dentro de las <option> del datalist
+    function updateRubroId() {
+        const texto = rubroInput.value.trim();
+        let encontrado = false;
+
+        datalistOptions.forEach(opt => {
+            if (opt.value.toLowerCase() === texto.toLowerCase()) {
+                // Si coincide exactamente (ignorando mayúsculas/minúsculas), asigno el data-id
+                rubroIdHidden.value = opt.getAttribute('data-id');
+                encontrado = true;
+            }
+        });
+
+        if (!encontrado) {
+            // Si no encontró coincidencia exacta, limpio el campo oculto
+            rubroIdHidden.value = '';
+        }
+    }
+
+    // Cada vez que el contenido del input cambie, actualizo el hidden
+    rubroInput.addEventListener('input', updateRubroId);
+
+    // Al cargar la página (y tener old values), la función seteará rubro_id si corresponde
+    window.addEventListener('DOMContentLoaded', updateRubroId);
 </script>
 @endsection
