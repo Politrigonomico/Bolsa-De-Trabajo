@@ -35,7 +35,7 @@
                     <a href="{{ route('index') }}" class="px-3 py-2 rounded-md text-sm font-medium transition hover:bg-blue-500 {{ request()->routeIs('index') ? 'bg-blue-800' : '' }}">Inicio</a>
                     <a href="{{ route('busqueda') }}" class="px-3 py-2 rounded-md text-sm font-medium transition hover:bg-blue-500 {{ request()->routeIs('busqueda') ? 'bg-blue-800' : '' }}">Postulantes</a>
                     <a href="{{ route('postulante_nuevo') }}" class="px-3 py-2 rounded-md text-sm font-medium transition hover:bg-blue-500 {{ request()->routeIs('postulante_nuevo') ? 'bg-blue-800' : '' }}">Nuevo Postulante</a>
-                    <a href="{{ route('empresa_nuevo') }}" class="px-3 py-2 rounded-md text-sm font-medium transition hover:bg-blue-500 {{ request()->routeIs('empresa_nuevo') ? 'bg-blue-800' : '' }}">Empresas</a>
+                    <a href="{{ route('buscar_empresa') }}" class="px-3 py-2 rounded-md text-sm font-medium transition hover:bg-blue-500 {{ request()->routeIs('empresa_nuevo') ? 'bg-blue-800' : '' }}">Empresas</a>
                     <a href="{{ route('ingresos') }}" class="px-3 py-2 rounded-md text-sm font-medium transition hover:bg-blue-500 {{ request()->routeIs('ingresos') ? 'bg-blue-800' : '' }}">Ingresos</a>
                 </div>
             </div>

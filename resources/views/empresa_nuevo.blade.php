@@ -123,7 +123,7 @@
 
         <!-- Botones -->
         <div class="mt-8 flex justify-end space-x-3">
-            <a href="{{ route('empresa_nuevo') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">Cancelar</a>
+            <a href="{{ route('index') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">Cancelar</a>
             <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Guardar</button>
         </div>
     </form>

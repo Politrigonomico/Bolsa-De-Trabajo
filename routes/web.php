@@ -5,42 +5,57 @@ use App\Http\Controllers\PostulanteController;
 use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\EmpresaController;
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
+
 // Página principal
 Route::view('/', 'index')->name('index');
-
-// Vistas estáticas que sí siguen siendo estáticas
 Route::view('/ingresos', 'ingresos')->name('ingresos');
-// Route::view('/postulante_nuevo', 'postulante_nuevo')->name('postulante_nuevo');
 
-// Ahora redirigimos todo a tu controlador:
+// INTEGRACIÓN DE POSTULANTES
+// Mostrar formulario para crear un nuevo postulante
 Route::get('/postulante_nuevo', [PostulanteController::class, 'create'])
      ->name('postulante_nuevo');
-
+// Guardar un postulante
 Route::post('/postulante_nuevo', [PostulanteController::class, 'store'])
      ->name('postulante.store');
+// Editar postulante
+Route::get('/postulantes/{postulante}/edit', [PostulanteController::class, 'edit'])
+     ->name('postulantes.edit');
+// Actualizar postulante
+Route::put('/postulantes/{id}', [PostulanteController::class, 'update'])
+     ->name('postulantes.update');
+// Eliminar postulante
+Route::delete('/postulantes/{postulante}', [PostulanteController::class, 'destroy'])
+     ->name('postulantes.destroy');
+// Listado/búsqueda de postulantes
+Route::get('/busqueda', [PostulanteController::class, 'index'])
+     ->name('busqueda');
 
-Route::put('/postulantes/{id}', [PostulanteController::class, 'update'])->name('postulantes.update');
-Route::get('/postulantes/{postulante}/edit', [PostulanteController::class, 'edit'])->name('postulantes.edit');
-Route::delete('/postulantes/{postulante}', [PostulanteController::class, 'destroy'])->name('postulantes.destroy');
-
-// Búsqueda y listado de postulantes
-Route::get('/busqueda', [PostulanteController::class, 'index'])->name('busqueda');
-
-// Configuración de rubros…
+// CONFIGURACIÓN DE RUBROS (u otros datos)
 Route::get('/configuracion', [ConfiguracionController::class, 'index'])
      ->name('configuracion');
+// Formulario para agregar un nuevo rubro
 Route::get('/configuracion/ingresar', [ConfiguracionController::class, 'create'])
      ->name('configuracion.create');
+// Guardar rubro
 Route::post('/configuracion/ingresar', [ConfiguracionController::class, 'store'])
      ->name('configuracion.store');
 
-// Rutas para la gestión de empresas
-Route::view('empresa_nuevo', 'empresa_nuevo')->name('empresa_nuevo');
 
-Route::get('empresas/create', [EmpresaController::class, 'create'])
-    ->name('empresas.create');
+// ─── RUTAS PARA EMPRESAS ───────────────────────────────────────────────────────
+// 1) Mostrar formulario para crear una empresa
+Route::get('/empresa_nuevo', [EmpresaController::class, 'create'])
+     ->name('empresa_nuevo');
 
-Route::post('/empresa', [EmpresaController::class, 'store'])->name('empresa.store');
+// 2) Guardar la empresa (submit del formulario)
+Route::post('/empresa_nuevo', [EmpresaController::class, 'store'])
+     ->name('empresa.store');
 
-
-Route::get('/empresa', [EmpresaController::class, 'index'])->name('empresa.index');
+// 3) Listar todas las empresas
+//    (Esta ruta invoca el método index() y carga la vista buscar_empresa.blade.php)
+Route::get('/buscar_empresa', [EmpresaController::class, 'index'])
+     ->name('buscar_empresa');
