@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('tipo_carnet', 100)->nullable();
             $table->boolean('movilidad_propia')->default(false);
             $table->string('sexo', 10)->nullable();
+            $table->string('cv_pdf')->nullable();
             $table->timestamps();
         });
     }

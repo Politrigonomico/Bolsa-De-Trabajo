@@ -12,9 +12,11 @@ class Empresa extends Model
         'razon_social',
         'cuit',
         'rubro_empresa',
-        'contacto',
-        'telefono',
-        'email',
         'observacion',
     ];
+    public function rrhh()
+    {
+        return $this->hasOne(RRHH::class);
+    }
+
 }

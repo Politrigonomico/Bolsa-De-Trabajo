@@ -33,17 +33,30 @@ class EmpresaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'razon_social'    => 'required|string|max:255',
-            'cuit'            => 'required|string|max:50|unique:empresas,cuit',
-            'rubro_empresa'   => 'required|string|max:255',
-            'contacto'        => 'required|string|max:255',
-            'telefono'        => 'required|string|max:50',
-            'email'           => 'required|email|max:255|unique:empresas,email',
-            'observacion'     => 'nullable|string|max:500',
+            'razon_social' => 'required|string|max:255',
+            'cuit' => 'required|string|max:50|unique:empresas,cuit',
+            'rubro_empresa' => 'required|string|max:255',
+            'observacion' => 'nullable|string|max:500',
+            // RRHH
+            'contacto' => 'nullable|string|max:255',
+            'telefono' => 'nullable|string|max:50',
+            'email' => 'nullable|email|max:255',
         ]);
 
-        // Crear la empresa en la base de datos
-        Empresa::create($validated);
+        // Crear empresa
+        $empresa = Empresa::create([
+            'razon_social' => $validated['razon_social'],
+            'cuit' => $validated['cuit'],
+            'rubro_empresa' => $validated['rubro_empresa'],
+            'observacion' => $validated['observacion'] ?? null,
+        ]);
+
+        $empresa->rrhh()->create([
+            'contacto' => $validated['contacto'],
+            'telefono' => $validated['telefono'],
+            'email' => $validated['email'],
+        ]);
+
 
         // Redirigir al listado con mensaje de éxito
         return redirect()
@@ -52,4 +65,43 @@ class EmpresaController extends Controller
     }
 
     // (Opcionales: show, edit, update, destroy si luego los vas a usar)
+
+    public function edit(Empresa $empresa)
+    {
+        $empresa->load('rrhh'); 
+        return view('buscar_empresa', compact('empresa'));
+    }
+
+
+    public function update(Request $request, Empresa $empresa)
+    {
+        $request->validate([
+            'razon_social' => 'required|string|max:255',
+            'cuit' => 'required|string|max:50|unique:empresas,cuit,' . $empresa->id,
+            'rubro_empresa' => 'required|string|max:255',
+            'observacion' => 'nullable|string|max:500',
+            // RRHH
+            'contacto' => 'nullable|string|max:255',
+            'telefono' => 'nullable|string|max:50',
+            'email' => 'nullable|email|max:255',
+        ]);
+        
+        $empresa->update([
+            'razon_social' => $request->razon_social,
+            'cuit' => $request->cuit,
+            'rubro_empresa' => $request->rubro_empresa,
+            'observacion' => $request->observacion,
+        ]);
+        $empresa->rrhh()->updateOrCreate(
+            ['empresa_id' => $empresa->id], // Condición para actualizar o crear
+            [
+                'contacto' => $request->contacto,
+                'telefono' => $request->telefono,
+                'email' => $request->email,
+            ]
+        );
+        return redirect()->route('buscar_empresa')->with('success', 'Empresa actualizada con éxito.');
+
+    }
+
 }

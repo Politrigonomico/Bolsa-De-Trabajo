@@ -17,9 +17,6 @@ return new class extends Migration
             $table->string('razon_social');
             $table->string('cuit')->unique();
             $table->string('rubro_empresa');
-            $table->string('contacto');
-            $table->string('telefono');
-            $table->string('email')->unique();
             $table->text('observacion')->nullable();
             $table->timestamps();
         });

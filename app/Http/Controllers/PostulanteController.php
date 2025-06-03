@@ -4,10 +4,13 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use App\Models\Postulante;
 use Illuminate\Http\Request;
-use App\Models\Rubro; 
+use App\Models\Rubro;
+use Illuminate\Support\Facades\Storage;
+
 
 class PostulanteController extends Controller
 {
@@ -128,8 +131,16 @@ class PostulanteController extends Controller
         $validated['certificado_check'] = $request->has('certificado_check') ;
         $validated['carnet_check'] = $request->has('carnet_check') ;
         $validated['movilidad_propia'] = $request->has('movilidad_propia') ;
+        
 
-        Postulante::create($validated);
+        $postulante = Postulante::create($validated);
+
+        $pdf = Pdf::loadView('pdf.cv', ['postulante' => $postulante]);
+        $filename = 'cv_' . $postulante->id . '.pdf';
+        Storage::disk('public')->put("cvs/{$filename}", $pdf->output());
+        // Guardamos el nombre del archivo PDF en el campo 'cv_pdf' del postulante
+        $postulante->cv_pdf = $filename;
+        $postulante->save();
 
         return redirect()->route('postulante_nuevo')->with('success', 'Postulante cargado correctamente.');
     }
@@ -186,6 +197,7 @@ class PostulanteController extends Controller
             'rubro'               => 'required|string|exists:rubros,rubro',
             'localidad'           => 'nullable|string|max:250',
             'tipo_carnet'         => 'nullable|string|max:100',
+
             // Aquí validamos que venga "0" o "1". Si es otro valor, falla.
             'certificado_check'   => 'nullable|in:0,1',
         ]);
@@ -214,6 +226,25 @@ class PostulanteController extends Controller
         } else {
             $postulante->rubro_id = null;
         }
+
+        if (!$request->hasFile('cv_pdf')) {
+            
+            $pdf = Pdf::loadView('pdf.cv', ['postulante' => $postulante]);
+
+            
+            if ($postulante->cv_pdf) {
+                Storage::disk('public')->delete("cvs/{$postulante->cv_pdf}");
+            }
+
+            
+            $filename = 'cv_' . $postulante->id . '.pdf';
+            Storage::disk('public')->put("cvs/{$filename}", $pdf->output());
+
+            
+            $postulante->cv_pdf = $filename;
+            $postulante->save();
+        }
+
 
         // 6) Guardamos los cambios
         $postulante->save();

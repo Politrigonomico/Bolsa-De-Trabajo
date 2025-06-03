@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostulanteController;
 use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\EmpresaController;
+use App\Models\Empresa;
+use App\Models\RRHH;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,5 +59,14 @@ Route::post('/empresa_nuevo', [EmpresaController::class, 'store'])
 
 // 3) Listar todas las empresas
 //    (Esta ruta invoca el método index() y carga la vista buscar_empresa.blade.php)
+$empresas = Empresa::with('rrhh')->get();
 Route::get('/buscar_empresa', [EmpresaController::class, 'index'])
      ->name('buscar_empresa');
+
+// 4) Editar una empresa
+Route::put('/empresa/{empresa}', [EmpresaController::class, 'update'])
+     ->name('empresa.update');
+
+Route::get('/empresa/{empresa}/edit', [EmpresaController::class, 'edit'])
+     ->name('empresa.edit');
+

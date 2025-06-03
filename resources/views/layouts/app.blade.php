@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
-
     {{-- Navbar Mejorado --}}
     <nav class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -36,8 +35,6 @@
                     <a href="{{ route('busqueda') }}" class="px-3 py-2 rounded-md text-sm font-medium transition hover:bg-blue-500 {{ request()->routeIs('busqueda') ? 'bg-blue-800' : '' }}">Postulantes</a>
                     <a href="{{ route('postulante_nuevo') }}" class="px-3 py-2 rounded-md text-sm font-medium transition hover:bg-blue-500 {{ request()->routeIs('postulante_nuevo') ? 'bg-blue-800' : '' }}">Nuevo Postulante</a>
                     <a href="{{ route('buscar_empresa') }}" class="px-3 py-2 rounded-md text-sm font-medium transition hover:bg-blue-500 {{ request()->routeIs('empresa_nuevo') ? 'bg-blue-800' : '' }}">Empresas</a>
-                    <a href="{{ route('ingresos') }}" class="px-3 py-2 rounded-md text-sm font-medium transition hover:bg-blue-500 {{ request()->routeIs('ingresos') ? 'bg-blue-800' : '' }}">Ingresos</a>
-                </div>
             </div>
         </div>
         <!-- Menú móvil -->
@@ -47,7 +44,6 @@
                 <a href="{{ route('busqueda') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-blue-500">Postulantes</a>
                 <a href="{{ route('postulante_nuevo') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-blue-500">Nuevo Postulante</a>
                 <a href="{{ route('empresa_nuevo') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-blue-500">Empresas</a>
-                <a href="{{ route('ingresos') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-blue-500">Ingresos</a>
             </div>
         </div>
     </nav>

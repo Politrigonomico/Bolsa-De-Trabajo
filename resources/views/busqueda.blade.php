@@ -170,7 +170,14 @@
                             >
                                 ✏️ Editar
                             </button>
-
+                            @if ($postulante->cv_pdf)
+                                <a href="{{ asset('storage/cvs/' . $postulante->cv_pdf) }}" target="_blank" class="btn btn-sm btn-primary">
+                                    Ver CV
+                                </a>
+                            @else
+                                <span class="text-gray-500">CV no disponible</span>
+                            @endif
+                            
                             <form
                                 action="{{ route('postulantes.destroy', $postulante->id) }}"
                                 method="POST"
