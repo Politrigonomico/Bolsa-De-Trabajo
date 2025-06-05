@@ -7,12 +7,6 @@ use App\Http\Controllers\EmpresaController;
 use App\Models\Empresa;
 use App\Models\RRHH;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
-
 // Página principal
 Route::view('/', 'index')->name('index');
 Route::view('/ingresos', 'ingresos')->name('ingresos');
