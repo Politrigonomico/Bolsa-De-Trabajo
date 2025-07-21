@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Empresa;
 use Illuminate\Http\Request;
+use App\Models\RRHH;
 
 class EmpresaController extends Controller
 {
@@ -13,7 +14,7 @@ class EmpresaController extends Controller
     public function index()
     {
         // Obtener todas las empresas (de la más reciente a la más antigua)
-        $empresas = Empresa::latest()->get();
+        $empresas = Empresa::with('rrhh')->latest()->get();
 
         // Retornar la vista de listado
         return view('buscar_empresa', compact('empresas'));
@@ -75,33 +76,32 @@ class EmpresaController extends Controller
 
     public function update(Request $request, Empresa $empresa)
     {
-        $request->validate([
+        $validated = $request->validate([
             'razon_social' => 'required|string|max:255',
             'cuit' => 'required|string|max:50|unique:empresas,cuit,' . $empresa->id,
             'rubro_empresa' => 'required|string|max:255',
             'observacion' => 'nullable|string|max:500',
-            // RRHH
             'contacto' => 'nullable|string|max:255',
             'telefono' => 'nullable|string|max:50',
             'email' => 'nullable|email|max:255',
         ]);
-        
+
         $empresa->update([
-            'razon_social' => $request->razon_social,
-            'cuit' => $request->cuit,
-            'rubro_empresa' => $request->rubro_empresa,
-            'observacion' => $request->observacion,
+            'razon_social' => $validated['razon_social'],
+            'cuit' => $validated['cuit'],
+            'rubro_empresa' => $validated['rubro_empresa'],
+            'observacion' => $validated['observacion'] ?? null,
         ]);
+
         $empresa->rrhh()->updateOrCreate(
-            ['empresa_id' => $empresa->id], // Condición para actualizar o crear
+            ['empresa_id' => $empresa->id],
             [
-                'contacto' => $request->contacto,
-                'telefono' => $request->telefono,
-                'email' => $request->email,
+                'contacto' => $validated['contacto'] ?? null,
+                'telefono' => $validated['telefono'] ?? null,
+                'email' => $validated['email'] ?? null,
             ]
         );
-        return redirect()->route('buscar_empresa')->with('success', 'Empresa actualizada con éxito.');
 
+        return redirect()->route('buscar_empresa')->with('success', 'Empresa actualizada correctamente.');
     }
-
 }

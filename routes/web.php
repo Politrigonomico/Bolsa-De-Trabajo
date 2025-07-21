@@ -4,11 +4,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostulanteController;
 use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\InformeController;
+use App\Models\Postulante;
 use App\Models\Empresa;
 use App\Models\RRHH;
 
+
 // Página principal
-Route::view('/', 'index')->name('index');
+Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::view('/ingresos', 'ingresos')->name('ingresos');
 
 // INTEGRACIÓN DE POSTULANTES
@@ -53,14 +57,22 @@ Route::post('/empresa_nuevo', [EmpresaController::class, 'store'])
 
 // 3) Listar todas las empresas
 //    (Esta ruta invoca el método index() y carga la vista buscar_empresa.blade.php)
-$empresas = Empresa::with('rrhh')->get();
+
 Route::get('/buscar_empresa', [EmpresaController::class, 'index'])
      ->name('buscar_empresa');
 
 // 4) Editar una empresa
-Route::put('/empresa/{empresa}', [EmpresaController::class, 'update'])
-     ->name('empresa.update');
 
-Route::get('/empresa/{empresa}/edit', [EmpresaController::class, 'edit'])
-     ->name('empresa.edit');
+Route::get('/buscar_empresa', [EmpresaController::class, 'index'])->name('buscar_empresa');
+Route::put('/empresa/{empresa}', [EmpresaController::class, 'update'])->name('empresa.update');
+
+
+// 5) Informes
+
+
+Route::get('/informes', [InformeController::class, 'index'])->name('informes.index');
+Route::get('/informes/filtrar', [InformeController::class, 'filtrar'])->name('informes.filtrar');
+Route::get('/informes/pdf', [InformeController::class, 'pdf'])->name('informes.pdf');
+
+
 
