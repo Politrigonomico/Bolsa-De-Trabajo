@@ -92,7 +92,7 @@
 
         {{-- ------------- SECCIÓN RUBRO: AHORA CON DATALIST ------------ --}}
         <div class="col-span-2">
-            <label for="rubro" class="block font-medium mb-1">Rubro</label>
+            <label for="rubro" class="block font-medium mb-1">Profesion</label>
 
             <!-- Input que muestra el datalist -->
             <input
@@ -147,7 +147,6 @@
                 <span class="text-red-600 text-sm">{{ $message }}</span>
             @enderror
         </div>
-        
         {{-- -------------------- CAMPOS CHECKBOX -------------------- --}}
 
         <div class="col-span-2 flex flex-wrap items-center gap-4 mt-2">

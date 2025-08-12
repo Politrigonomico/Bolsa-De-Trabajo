@@ -12,11 +12,11 @@
     <aside class="w-64 bg-gradient-to-b from-orange-600 to-orange-500 text-white flex flex-col fixed top-0 left-0 h-full shadow-lg z-40">
         <div class="flex items-center justify-center h-16 border-b border-orange-700">
             <a href="{{ route('index') }}" class="flex items-center space-x-2">
-                <img src="{{ asset('images/logo.jpg') }}" alt="Logo" class="h-10 w-10 rounded-md shadow" />
+                <img src="{{ asset('images/logo_oficial.jpg') }}" alt="Logo" class="h-10 w-10 rounded-md shadow" />
                 <span class="font-extrabold text-xl tracking-wide">Bolsa de Trabajo</span>
             </a>
         </div>
-
+ 
         <nav class="flex flex-col mt-4 space-y-1 px-4 flex-1 overflow-y-auto">
             <a href="{{ route('index') }}" class="block px-4 py-3 rounded-md font-semibold hover:bg-orange-700 transition {{ request()->routeIs('index') ? 'bg-orange-800' : '' }}">
                 Inicio
@@ -26,6 +26,9 @@
             </a>
             <a href="{{ route('postulante_nuevo') }}" class="block px-4 py-3 rounded-md font-semibold hover:bg-orange-700 transition {{ request()->routeIs('postulante_nuevo') ? 'bg-orange-800' : '' }}">
                 Nuevo Postulante
+            </a>
+            <a href="{{ route('empresa_nuevo') }}" class="block px-4 py-3 rounded-md font-semibold hover:bg-orange-700 transition"{{ request()->routeIs('empresa_nuevo') ? 'bg-orange-800' : '' }}">
+                Nueva empresa
             </a>
             <a href="{{ route('buscar_empresa') }}" class="block px-4 py-3 rounded-md font-semibold hover:bg-orange-700 transition {{ request()->routeIs('buscar_empresa') ? 'bg-orange-800' : '' }}">
                 Empresas
