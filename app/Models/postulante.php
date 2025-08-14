@@ -1,7 +1,5 @@
 <?php
 
-// app/Models/Postulante.php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,11 +22,20 @@ class Postulante extends Model
         'estado_civil',
         'experiencia_laboral',
         'estudios_cursados',
+        'estudios_primaria',
+        'estudios_secundaria', 
+        'estudios_terciario',
+        'estudios_universidad',
+        'cursando_primaria',
+        'cursando_secundaria',
+        'cursando_terciario',
+        'cursando_universidad',
         'certificado_check',
         'carnet_check',
         'tipo_carnet',
         'movilidad_propia',
         'sexo',
+        'foto',
     ];
 
     public function rubro()
@@ -36,4 +43,13 @@ class Postulante extends Model
         return $this->belongsTo(Rubro::class);
     }
 
+    public function rubros()
+    {
+        return $this->belongsToMany(Rubro::class, 'postulante_rubro');
+    }
+
+    public function carnets()
+    {
+        return $this->belongsToMany(Carnet::class, 'postulante_carnet');
+    }
 }

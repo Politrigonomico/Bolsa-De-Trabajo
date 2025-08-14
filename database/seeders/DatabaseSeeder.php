@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
             RubrosTableSeeder::class,
             PostulantesTableSeeder::class,
             EmpresasSeeder::class,
+            CarnetsSeeder::class,
+            LocalidadesSeeder::class,
         ]);
     }
 }
