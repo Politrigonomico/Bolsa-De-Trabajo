@@ -10,6 +10,7 @@ class Carnet extends Model
     use HasFactory;
     
     protected $fillable = [
+        'carnetTipo',
         'tipo_carnet',
         'descripcion',
     ];
@@ -17,5 +18,11 @@ class Carnet extends Model
     public function postulantes()
     {
         return $this->belongsToMany(Postulante::class, 'postulante_carnet');
+    }
+
+    // Accessor para mantener compatibilidad
+    public function getTipoCarnetAttribute($value)
+    {
+        return $value ?? $this->attributes['carnetTipo'] ?? null;
     }
 }

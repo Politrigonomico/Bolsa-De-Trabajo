@@ -183,64 +183,103 @@
             </div>
         </div>
 
-        {{-- Educación --}}
+        {{-- Educación Mejorada --}}
         <div class="bg-gray-50 p-6 rounded-lg">
             <h3 class="text-lg font-semibold mb-4 text-gray-700">🎓 Educación</h3>
+            <p class="text-sm text-gray-600 mb-4">
+                <strong>Nota:</strong> No es necesario marcar niveles anteriores. Si completó universidad, se asume que completó los niveles previos.
+            </p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="space-y-3">
-                    <h4 class="font-medium text-gray-700">Primaria</h4>
-                    <label class="flex items-center">
-                        <input type="checkbox" name="estudios_primaria" value="1" {{ old('estudios_primaria') ? 'checked' : '' }}
-                               class="mr-2 text-blue-600">
-                        Completada
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" name="cursando_primaria" value="1" {{ old('cursando_primaria') ? 'checked' : '' }}
-                               class="mr-2 text-orange-600">
-                        En curso
-                    </label>
+                <div class="bg-white p-4 rounded-lg border-2 border-gray-200">
+                    <h4 class="font-bold text-gray-700 mb-3 text-center">Primaria</h4>
+                    <div class="space-y-2">
+                        <label class="flex items-center cursor-pointer hover:bg-blue-50 p-2 rounded">
+                            <input type="radio" name="nivel_primaria" value="completada" 
+                                   {{ old('estudios_primaria') ? 'checked' : '' }}
+                                   class="mr-3 text-blue-600 w-4 h-4">
+                            <span class="text-sm">Completada</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer hover:bg-orange-50 p-2 rounded">
+                            <input type="radio" name="nivel_primaria" value="cursando" 
+                                   {{ old('cursando_primaria') ? 'checked' : '' }}
+                                   class="mr-3 text-orange-600 w-4 h-4">
+                            <span class="text-sm">En curso</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                            <input type="radio" name="nivel_primaria" value="ninguna" checked
+                                   class="mr-3 text-gray-600 w-4 h-4">
+                            <span class="text-sm">No aplica</span>
+                        </label>
+                    </div>
                 </div>
 
-                <div class="space-y-3">
-                    <h4 class="font-medium text-gray-700">Secundaria</h4>
-                    <label class="flex items-center">
-                        <input type="checkbox" name="estudios_secundaria" value="1" {{ old('estudios_secundaria') ? 'checked' : '' }}
-                               class="mr-2 text-blue-600">
-                        Completada
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" name="cursando_secundaria" value="1" {{ old('cursando_secundaria') ? 'checked' : '' }}
-                               class="mr-2 text-orange-600">
-                        En curso
-                    </label>
+                <div class="bg-white p-4 rounded-lg border-2 border-gray-200">
+                    <h4 class="font-bold text-gray-700 mb-3 text-center">Secundaria</h4>
+                    <div class="space-y-2">
+                        <label class="flex items-center cursor-pointer hover:bg-blue-50 p-2 rounded">
+                            <input type="radio" name="nivel_secundaria" value="completada" 
+                                   {{ old('estudios_secundaria') ? 'checked' : '' }}
+                                   class="mr-3 text-blue-600 w-4 h-4">
+                            <span class="text-sm">Completada</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer hover:bg-orange-50 p-2 rounded">
+                            <input type="radio" name="nivel_secundaria" value="cursando" 
+                                   {{ old('cursando_secundaria') ? 'checked' : '' }}
+                                   class="mr-3 text-orange-600 w-4 h-4">
+                            <span class="text-sm">En curso</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                            <input type="radio" name="nivel_secundaria" value="ninguna" checked
+                                   class="mr-3 text-gray-600 w-4 h-4">
+                            <span class="text-sm">No aplica</span>
+                        </label>
+                    </div>
                 </div>
 
-                <div class="space-y-3">
-                    <h4 class="font-medium text-gray-700">Terciario</h4>
-                    <label class="flex items-center">
-                        <input type="checkbox" name="estudios_terciario" value="1" {{ old('estudios_terciario') ? 'checked' : '' }}
-                               class="mr-2 text-blue-600">
-                        Completado
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" name="cursando_terciario" value="1" {{ old('cursando_terciario') ? 'checked' : '' }}
-                               class="mr-2 text-orange-600">
-                        En curso
-                    </label>
+                <div class="bg-white p-4 rounded-lg border-2 border-gray-200">
+                    <h4 class="font-bold text-gray-700 mb-3 text-center">Terciario</h4>
+                    <div class="space-y-2">
+                        <label class="flex items-center cursor-pointer hover:bg-blue-50 p-2 rounded">
+                            <input type="radio" name="nivel_terciario" value="completada" 
+                                   {{ old('estudios_terciario') ? 'checked' : '' }}
+                                   class="mr-3 text-blue-600 w-4 h-4">
+                            <span class="text-sm">Completado</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer hover:bg-orange-50 p-2 rounded">
+                            <input type="radio" name="nivel_terciario" value="cursando" 
+                                   {{ old('cursando_terciario') ? 'checked' : '' }}
+                                   class="mr-3 text-orange-600 w-4 h-4">
+                            <span class="text-sm">En curso</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                            <input type="radio" name="nivel_terciario" value="ninguna" checked
+                                   class="mr-3 text-gray-600 w-4 h-4">
+                            <span class="text-sm">No aplica</span>
+                        </label>
+                    </div>
                 </div>
 
-                <div class="space-y-3">
-                    <h4 class="font-medium text-gray-700">Universidad</h4>
-                    <label class="flex items-center">
-                        <input type="checkbox" name="estudios_universidad" value="1" {{ old('estudios_universidad') ? 'checked' : '' }}
-                               class="mr-2 text-blue-600">
-                        Completada
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" name="cursando_universidad" value="1" {{ old('cursando_universidad') ? 'checked' : '' }}
-                               class="mr-2 text-orange-600">
-                        En curso
-                    </label>
+                <div class="bg-white p-4 rounded-lg border-2 border-gray-200">
+                    <h4 class="font-bold text-gray-700 mb-3 text-center">Universidad</h4>
+                    <div class="space-y-2">
+                        <label class="flex items-center cursor-pointer hover:bg-blue-50 p-2 rounded">
+                            <input type="radio" name="nivel_universidad" value="completada" 
+                                   {{ old('estudios_universidad') ? 'checked' : '' }}
+                                   class="mr-3 text-blue-600 w-4 h-4">
+                            <span class="text-sm">Completada</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer hover:bg-orange-50 p-2 rounded">
+                            <input type="radio" name="nivel_universidad" value="cursando" 
+                                   {{ old('cursando_universidad') ? 'checked' : '' }}
+                                   class="mr-3 text-orange-600 w-4 h-4">
+                            <span class="text-sm">En curso</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                            <input type="radio" name="nivel_universidad" value="ninguna" checked
+                                   class="mr-3 text-gray-600 w-4 h-4">
+                            <span class="text-sm">No aplica</span>
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -255,27 +294,31 @@
             </div>
         </div>
 
-        {{-- Carnets y Licencias --}}
+        {{-- Carnets y Licencias Mejorado --}}
         <div class="bg-gray-50 p-6 rounded-lg">
             <h3 class="text-lg font-semibold mb-4 text-gray-700">🚗 Carnets y Licencias</h3>
             <div class="space-y-4">
-                <div class="flex items-center">
+                <div class="flex items-center bg-white p-4 rounded-lg border">
                     <input id="carnet_check" type="checkbox" name="carnet_check" value="1" 
-                           {{ old('carnet_check') ? 'checked' : '' }} class="mr-3 text-blue-600">
+                           {{ old('carnet_check') ? 'checked' : '' }} class="mr-3 text-blue-600 w-5 h-5">
                     <label for="carnet_check" class="font-medium text-gray-700">Posee carnet de conducir</label>
                 </div>
 
                 <div id="carnets-container" style="display:none;" class="space-y-3">
-                    <label class="block font-medium text-gray-700">Tipos de carnet:</label>
-                    <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                    <label class="block font-medium text-gray-700">Seleccione los tipos de carnet que posee:</label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                         @foreach($carnets ?? [] as $carnet)
-                            <label class="flex items-center bg-white p-2 rounded border hover:bg-blue-50">
+                            <label class="flex items-start bg-white p-3 rounded-lg border-2 border-gray-200 hover:border-blue-400 hover:bg-blue-50 cursor-pointer transition-all">
                                 <input type="checkbox" name="carnets[]" value="{{ $carnet->id }}" 
-                                       class="mr-2 text-blue-600">
-                                <span class="text-sm">
-                                    <strong>{{ $carnet->tipo_carnet }}</strong><br>
-                                    <span class="text-gray-600 text-xs">{{ $carnet->descripcion }}</span>
-                                </span>
+                                       class="mr-3 mt-1 text-blue-600 w-5 h-5 flex-shrink-0">
+                                <div class="flex-1">
+                                    <div class="font-bold text-blue-700 text-base">
+                                        {{ $carnet->tipo_carnet ?? $carnet->carnetTipo }}
+                                    </div>
+                                    <div class="text-gray-600 text-sm mt-1">
+                                        {{ $carnet->descripcion }}
+                                    </div>
+                                </div>
                             </label>
                         @endforeach
                     </div>
@@ -298,17 +341,17 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="flex items-center bg-white p-4 rounded-lg border">
+                    <div class="flex items-center bg-white p-4 rounded-lg border-2 border-gray-200 hover:border-green-400 transition">
                         <input id="certificado_check" type="checkbox" name="certificado_check" value="1" 
-                               {{ old('certificado_check') ? 'checked' : '' }} class="mr-3 text-green-600">
+                               {{ old('certificado_check') ? 'checked' : '' }} class="mr-3 text-green-600 w-5 h-5">
                         <label for="certificado_check" class="font-medium text-gray-700">
                             🍽️ Certificado de Manipulación de Alimentos
                         </label>
                     </div>
 
-                    <div class="flex items-center bg-white p-4 rounded-lg border">
+                    <div class="flex items-center bg-white p-4 rounded-lg border-2 border-gray-200 hover:border-blue-400 transition">
                         <input id="movilidad_propia" type="checkbox" name="movilidad_propia" value="1" 
-                               {{ old('movilidad_propia') ? 'checked' : '' }} class="mr-3 text-blue-600">
+                               {{ old('movilidad_propia') ? 'checked' : '' }} class="mr-3 text-blue-600 w-5 h-5">
                         <label for="movilidad_propia" class="font-medium text-gray-700">
                             🏍️ Movilidad Propia
                         </label>
@@ -389,6 +432,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     rubroInput.addEventListener('input', updateRubroId);
+    rubroInput.addEventListener('blur', updateRubroId);
     updateRubroId();
 
     // Agregar rubros adicionales
@@ -412,9 +456,61 @@ document.addEventListener('DOMContentLoaded', function() {
         rubrosAdicionalesContainer.appendChild(div);
     });
 
-    // Validación del formulario
-    document.getElementById('postulanteForm').addEventListener('submit', function(e) {
-        // Aquí puedes agregar validaciones adicionales si es necesario
+    // Manejo de educación con radio buttons
+    // Los campos hidden se crearán al enviar el formulario
+    const form = document.getElementById('postulanteForm');
+    form.addEventListener('submit', function(e) {
+        // Procesar nivel de primaria
+        const nivelPrimaria = document.querySelector('input[name="nivel_primaria"]:checked');
+        if (nivelPrimaria) {
+            if (nivelPrimaria.value === 'completada') {
+                addHiddenField('estudios_primaria', '1');
+            } else if (nivelPrimaria.value === 'cursando') {
+                addHiddenField('cursando_primaria', '1');
+            }
+        }
+
+        // Procesar nivel de secundaria
+        const nivelSecundaria = document.querySelector('input[name="nivel_secundaria"]:checked');
+        if (nivelSecundaria) {
+            if (nivelSecundaria.value === 'completada') {
+                addHiddenField('estudios_secundaria', '1');
+                addHiddenField('estudios_primaria', '1'); // Si completó secundaria, completó primaria
+            } else if (nivelSecundaria.value === 'cursando') {
+                addHiddenField('cursando_secundaria', '1');
+                addHiddenField('estudios_primaria', '1'); // Si cursa secundaria, completó primaria
+            }
+        }
+
+        // Procesar nivel terciario
+        const nivelTerciario = document.querySelector('input[name="nivel_terciario"]:checked');
+        if (nivelTerciario) {
+            if (nivelTerciario.value === 'completada') {
+                addHiddenField('estudios_terciario', '1');
+                addHiddenField('estudios_secundaria', '1'); // Completó secundaria
+                addHiddenField('estudios_primaria', '1'); // Completó primaria
+            } else if (nivelTerciario.value === 'cursando') {
+                addHiddenField('cursando_terciario', '1');
+                addHiddenField('estudios_secundaria', '1');
+                addHiddenField('estudios_primaria', '1');
+            }
+        }
+
+        // Procesar nivel universidad
+        const nivelUniversidad = document.querySelector('input[name="nivel_universidad"]:checked');
+        if (nivelUniversidad) {
+            if (nivelUniversidad.value === 'completada') {
+                addHiddenField('estudios_universidad', '1');
+                addHiddenField('estudios_secundaria', '1');
+                addHiddenField('estudios_primaria', '1');
+            } else if (nivelUniversidad.value === 'cursando') {
+                addHiddenField('cursando_universidad', '1');
+                addHiddenField('estudios_secundaria', '1');
+                addHiddenField('estudios_primaria', '1');
+            }
+        }
+
+        // Mostrar loading
         const loading = document.createElement('div');
         loading.innerHTML = `
             <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -428,6 +524,14 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         document.body.appendChild(loading);
     });
+
+    function addHiddenField(name, value) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+        form.appendChild(input);
+    }
 });
 </script>
 

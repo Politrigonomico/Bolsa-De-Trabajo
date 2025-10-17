@@ -1,384 +1,354 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>CV - {{ $postulante->nombre }} {{ $postulante->apellido }}</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.6;
-            color: #2d3748;
-            background: #f8fafc;
-        }
-        
-        .cv-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.1);
-        }
-        
-        .header-content {
-            position: relative;
-            z-index: 2;
-        }
-        
-        .photo-container {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            border: 4px solid rgba(255,255,255,0.3);
-            overflow: hidden;
-            background: rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .photo-container img {
+        @page { size: A4; margin: 5mm; }
+        html, body { margin:0; padding:0; font-family: "DejaVu Sans", "Helvetica", "Arial", sans-serif; color:#17202A; font-size:11pt; }
+        .wrap { width:100%; background:#fff; box-sizing:border-box; }
+
+        /* Layout */
+        .container {
+            display: table;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            border: 1px solid #e6eefc;
+            box-shadow: none;
         }
-        
-        .photo-placeholder {
-            font-size: 48px;
-            color: rgba(255,255,255,0.7);
+        .sidebar {
+            display: table-cell;
+            width: 85mm;
+            vertical-align: top;
+            background: #0f172a; /* oscuro */
+            color: #ffffff;
+            padding: 18px 14px;
         }
-        
-        .name {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        .main {
+            display: table-cell;
+            vertical-align: top;
+            min-height: 297mm; /* A4 */
+            padding: 18px 22px;
         }
-        
-        .profession {
-            font-size: 18px;
-            font-weight: 500;
-            opacity: 0.9;
-            margin-bottom: 20px;
+
+        /* Photo */
+        .photo {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 12px auto;
+            border: 4px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.03);
         }
-        
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin-top: 20px;
+        .photo img { width:100%; height:100%; object-fit:cover; display:block; }
+
+        /* Name & title in sidebar */
+        .side-name { text-align:center; font-size:16pt; font-weight:700; margin-bottom:4px; letter-spacing:0.6px; }
+        .side-role { text-align:center; font-size:10pt; opacity:0.95; margin-bottom:12px; }
+
+        /* Contact list */
+        .contact { font-size:9.5pt; line-height:1.45; margin-top:8px; }
+        .contact .item { margin-bottom:6px; display:block; }
+        .contact .label { font-weight:700; font-size:8.5pt; color: rgba(255,255,255,0.8); display:block; margin-bottom:2px; text-transform:uppercase; letter-spacing:0.6px; }
+
+        /* Sidebar sections */
+        .side-section { margin-top:14px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.06); }
+        .side-section .title { font-size:9pt; color: rgba(255,255,255,0.9); font-weight:700; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.6px; }
+
+        .badge { display:inline-block; padding:5px 8px; border-radius:12px; font-size:9pt; margin:3px 3px 3px 0; background:#e6f0ff; color:#0f172a; }
+
+        /* Main content */
+        .header-main {
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            margin-bottom:8px;
         }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-        }
-        
-        .main-content {
-            padding: 40px;
-        }
-        
-        .section {
-            margin-bottom: 35px;
-        }
-        
+        .name-main { font-size:18pt; font-weight:800; color:#0b3b8a; letter-spacing:0.4px; }
+        .role-main { font-size:11pt; color:#374151; margin-top:4px; }
+
+        .section { margin-top:14px; page-break-inside: avoid; }
         .section-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #667eea;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #e2e8f0;
-            position: relative;
+            font-size:10pt;
+            color:#0b3b8a;
+            font-weight:700;
+            margin-bottom:8px;
+            border-bottom:2px solid #e6f0ff;
+            padding-bottom:6px;
+            text-transform:uppercase;
+            letter-spacing:0.6px;
         }
-        
-        .section-title::before {
-            content: '';
+
+        .text-block {
+            font-size:10pt;
+            color:#22303a;
+            line-height:1.5;
+        }
+
+        /* Education grid */
+        .edu-grid { width:100%; border-collapse:collapse; margin-top:6px; }
+        .edu-grid td { vertical-align:top; padding:8px; font-size:10pt; }
+        .edu-card { background:#f7fbff; border-left:4px solid #22a0ff; padding:8px; }
+
+        /* Skills as pills */
+        .skills { margin-top:6px; }
+        .skill { display:inline-block; padding:6px 10px; margin:4px 5px 4px 0; border-radius:14px; font-size:9.5pt; background:#f1f5f9; color:#0b3b8a; }
+
+        /* Small details */
+        .muted { color:#6b7280; font-size:9.5pt; }
+        .footer {
             position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 50px;
-            height: 2px;
-            background: #667eea;
+            bottom: 1mm;
+            left: 10mm;
+            right: 10mm;
+            text-align:center;
+            font-size:8.5pt;
+            color:#6b7280;
         }
-        
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .info-item {
-            background: #f8fafc;
-            padding: 12px 16px;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .info-label {
-            font-weight: 600;
-            font-size: 12px;
-            text-transform: uppercase;
-            color: #718096;
-            margin-bottom: 4px;
-        }
-        
-        .info-value {
-            font-size: 14px;
-            color: #2d3748;
-        }
-        
-        .studies-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 12px;
-        }
-        
-        .study-item {
-            background: #f0fff4;
-            padding: 12px;
-            border-radius: 8px;
-            border-left: 4px solid #38a169;
-            text-align: center;
-        }
-        
-        .study-item.cursando {
-            background: #fffbeb;
-            border-left-color: #ecc94b;
-        }
-        
-        .study-level {
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 4px;
-        }
-        
-        .study-status {
-            font-size: 12px;
-            color: #718096;
-        }
-        
-        .carnets-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        
-        .carnet-badge {
-            background: #667eea;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-        
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        
-        .skill-badge {
-            background: #e2e8f0;
-            color: #2d3748;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-        
-        .skill-badge.highlight {
-            background: #48bb78;
-            color: white;
-        }
-        
-        .description-text {
-            background: #f8fafc;
-            padding: 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            line-height: 1.6;
-            border-left: 4px solid #667eea;
-        }
+
+        /* Dompdf-friendly: avoid complicated flexin inside table cell - kept simple */
     </style>
 </head>
 <body>
-    <div class="cv-container">
-        <header class="header">
-            <div class="header-content">
-                <div class="photo-container">
-                    @if(isset($postulante->foto) && $postulante->foto)
-                        <img src="{{ asset('storage/fotos/' . $postulante->foto) }}" alt="Foto de {{ $postulante->nombre }}">
+    <div class="wrap">
+        <div class="container">
+            <!-- SIDEBAR -->
+            <div class="sidebar">
+                @php
+                    // preparar imagen embebida para DOMPDF (base64). Compatible con jpeg/png/gif.
+                    $fotoDataUri = null;
+                    if(!empty($postulante->foto)) {
+                        $fotoPath = storage_path('app/public/fotos/' . $postulante->foto);
+                        if(file_exists($fotoPath)) {
+                            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                            $mime = finfo_file($finfo, $fotoPath);
+                            finfo_close($finfo);
+                            $data = base64_encode(file_get_contents($fotoPath));
+                            $fotoDataUri = 'data:' . $mime . ';base64,' . $data;
+                        }
+                    }
+                @endphp
+
+                <div class="photo">
+                    @if($fotoDataUri)
+                        <img src="{{ $fotoDataUri }}" alt="Foto {{ $postulante->nombre }}">
                     @else
-                        <div class="photo-placeholder">👤</div>
+                        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.8);font-size:34px;">👤</div>
                     @endif
                 </div>
-                <h1 class="name">{{ $postulante->nombre }} {{ $postulante->apellido }}</h1>
-                <p class="profession">{{ optional($postulante->rubro)->rubro ?? 'Profesional' }}</p>
-                
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <span>📧</span> {{ $postulante->email }}
+
+                <div class="side-name">{{ strtoupper($postulante->nombre) }} {{ strtoupper($postulante->apellido) }}</div>
+                <div class="side-role">{{ $postulante->rubro ? $postulante->rubro->rubro : ($postulante->profesion ?? 'Profesional') }}</div>
+
+                <div class="contact">
+                    <div class="item">
+                        <div class="label">Email</div>
+                        <div>{{ $postulante->email ?? '—' }}</div>
                     </div>
-                    <div class="contact-item">
-                        <span>📱</span> {{ $postulante->telefono }}
+                    <div class="item">
+                        <div class="label">Teléfono</div>
+                        <div>{{ $postulante->telefono ?? '—' }}</div>
                     </div>
-                    <div class="contact-item">
-                        <span>📍</span> {{ $postulante->localidad }}
+                    <div class="item">
+                        <div class="label">Domicilio</div>
+                        <div>{{ $postulante->domicilio ?? '—' }} @if($postulante->localidad), {{ $postulante->localidad }} @endif</div>
                     </div>
-                    <div class="contact-item">
-                        <span>🆔</span> {{ number_format($postulante->dni, 0, ',', '.') }}
+                    <div class="item">
+                        <div class="label">DNI</div>
+                        <div>{{ $postulante->dni ? number_format($postulante->dni,0,',','.') : '—' }}</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">Fecha Nac.</div>
+                        <div>
+                            @if($postulante->fecha_nacimiento)
+                                {{ \Carbon\Carbon::parse($postulante->fecha_nacimiento)->format('d/m/Y') }}
+                                ({{ \Carbon\Carbon::parse($postulante->fecha_nacimiento)->age }} años)
+                            @else
+                                —
+                            @endif
+                        </div>
                     </div>
                 </div>
-            </div>
-        </header>
 
-        <main class="main-content">
-            <!-- Información Personal -->
-            <section class="section">
-                <h2 class="section-title">Información Personal</h2>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label">Fecha de Nacimiento</div>
-                        <div class="info-value">{{ \Carbon\Carbon::parse($postulante->fecha_nacimiento)->format('d/m/Y') }} ({{ \Carbon\Carbon::parse($postulante->fecha_nacimiento)->age }} años)</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Estado Civil</div>
-                        <div class="info-value">{{ $postulante->estado_civil ?? 'No especificado' }}</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Domicilio</div>
-                        <div class="info-value">{{ $postulante->domicilio }}</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Sexo</div>
-                        <div class="info-value">{{ $postulante->sexo ?? 'No especificado' }}</div>
-                    </div>
+                <div class="side-section">
+                    <div class="title">Estado</div>
+                    <div class="muted">{{ $postulante->estado_civil ?? 'No especificado' }} · {{ $postulante->sexo ?? '—' }}</div>
                 </div>
-            </section>
 
-            <!-- Formación Académica -->
-            <section class="section">
-                <h2 class="section-title">Formación Académica</h2>
-                <div class="studies-grid">
-                    @if($postulante->estudios_primaria || $postulante->cursando_primaria)
-                        <div class="study-item {{ $postulante->cursando_primaria ? 'cursando' : '' }}">
-                            <div class="study-level">Primaria</div>
-                            <div class="study-status">
-                                {{ $postulante->cursando_primaria ? 'En curso' : 'Completada' }}
-                            </div>
-                        </div>
-                    @endif
-                    @if($postulante->estudios_secundaria || $postulante->cursando_secundaria)
-                        <div class="study-item {{ $postulante->cursando_secundaria ? 'cursando' : '' }}">
-                            <div class="study-level">Secundaria</div>
-                            <div class="study-status">
-                                {{ $postulante->cursando_secundaria ? 'En curso' : 'Completada' }}
-                            </div>
-                        </div>
-                    @endif
-                    @if($postulante->estudios_terciario || $postulante->cursando_terciario)
-                        <div class="study-item {{ $postulante->cursando_terciario ? 'cursando' : '' }}">
-                            <div class="study-level">Terciario</div>
-                            <div class="study-status">
-                                {{ $postulante->cursando_terciario ? 'En curso' : 'Completado' }}
-                            </div>
-                        </div>
-                    @endif
-                    @if($postulante->estudios_universidad || $postulante->cursando_universidad)
-                        <div class="study-item {{ $postulante->cursando_universidad ? 'cursando' : '' }}">
-                            <div class="study-level">Universidad</div>
-                            <div class="study-status">
-                                {{ $postulante->cursando_universidad ? 'En curso' : 'Completada' }}
-                            </div>
-                        </div>
-                    @endif
-                </div>
-                
-                @if($postulante->estudios_cursados)
-                    <div class="description-text">
-                        {{ $postulante->estudios_cursados }}
-                    </div>
-                @endif
-            </section>
-
-            <!-- Experiencia Laboral -->
-            @if($postulante->experiencia_laboral)
-                <section class="section">
-                    <h2 class="section-title">Experiencia Laboral</h2>
-                    <div class="description-text">
-                        {{ $postulante->experiencia_laboral }}
-                    </div>
-                </section>
-            @endif
-
-            <!-- Carnets y Licencias -->
-            @if($postulante->carnets && $postulante->carnets->count() > 0)
-                <section class="section">
-                    <h2 class="section-title">Carnets y Licencias</h2>
-                    <div class="carnets-container">
-                        @foreach($postulante->carnets as $carnet)
-                            <span class="carnet-badge">{{ $carnet->tipo_carnet }} - {{ $carnet->descripcion }}</span>
-                        @endforeach
-                    </div>
-                </section>
-            @endif
-
-            <!-- Competencias -->
-            <section class="section">
-                <h2 class="section-title">Competencias y Certificaciones</h2>
-                <div class="skills-container">
-                    @if($postulante->certificado_check)
-                        <span class="skill-badge highlight">Certificado Manipulación de Alimentos</span>
-                    @endif
-                    @if($postulante->movilidad_propia)
-                        <span class="skill-badge highlight">Movilidad Propia</span>
-                    @endif
+                @if(($postulante->rubros && $postulante->rubros->count()) || $postulante->rubro)
+                <div class="side-section">
+                    <div class="title">Áreas</div>
                     @if($postulante->rubro)
-                        <span class="skill-badge">{{ $postulante->rubro->rubro }}</span>
+                        <span class="badge">{{ $postulante->rubro->rubro }} (Principal)</span>
                     @endif
-                    @if($postulante->rubros && $postulante->rubros->count() > 1)
-                        @foreach($postulante->rubros as $rubro)
-                            @if($rubro->id != $postulante->rubro_id)
-                                <span class="skill-badge">{{ $rubro->rubro }}</span>
+                    @if($postulante->rubros)
+                        @foreach($postulante->rubros as $r)
+                            @if(!$postulante->rubro || $r->id != $postulante->rubro_id)
+                                <span class="badge">{{ $r->rubro }}</span>
                             @endif
                         @endforeach
                     @endif
                 </div>
-            </section>
-        </main>
+                @endif
+
+                <div class="side-section">
+                    <div class="title">Carnets / Certif.</div>
+                    @if($postulante->carnets && $postulante->carnets->count() > 0)
+                        @foreach($postulante->carnets as $c)
+                            <div style="margin-bottom:6px; font-size:9.5pt;">
+                                <strong>{{ $c->tipo_carnet ?? $c->carnetTipo }}</strong><br>
+                                <span class="muted" style="font-size:8.8pt;">{{ Str::limit($c->descripcion, 70) }}</span>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="muted">No cargados</div>
+                    @endif
+                </div>
+
+                <div class="side-section">
+                    <div class="title">Competencias</div>
+                    <div>
+                        @if($postulante->certificado_check) <span class="skill">Manipulación</span> @endif
+                        @if($postulante->movilidad_propia) <span class="skill">Movilidad propia</span> @endif
+                        @if($postulante->carnet_check) <span class="skill">Conductor</span> @endif
+                        @if(empty($postulante->certificado_check) && empty($postulante->movilidad_propia) && empty($postulante->carnet_check))
+                            <div class="muted">No especificadas</div>
+                        @endif
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- MAIN -->
+            <div class="main">
+                <div class="header-main">
+                    <div>
+                        <div class="name-main">{{ $postulante->nombre }} {{ $postulante->apellido }}</div>
+                        <div class="role-main">{{ $postulante->rubro ? $postulante->rubro->rubro : 'Profesional' }}</div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div class="muted" style="font-size:9pt;">CV generado: {{ date('d/m/Y') }}</div>
+                    </div>
+                </div>
+
+                {{-- Resumen / Objetivo --}}
+                @if($postulante->descripcion || $postulante->perfil)
+                <div class="section">
+                    <div class="section-title">Perfil profesional</div>
+                    <div class="text-block">
+                        {{ $postulante->descripcion ?? $postulante->perfil ?? '—' }}
+                    </div>
+                </div>
+                @endif
+
+                {{-- Formación --}}
+                <div class="section">
+                    <div class="section-title">Formación académica</div>
+
+                    @php
+                        $tieneEstudios = $postulante->estudios_primaria || $postulante->cursando_primaria ||
+                                         $postulante->estudios_secundaria || $postulante->cursando_secundaria ||
+                                         $postulante->estudios_terciario || $postulante->cursando_terciario ||
+                                         $postulante->estudios_universidad || $postulante->cursando_universidad;
+                    @endphp
+
+                    @if($tieneEstudios)
+                        <table class="edu-grid">
+                            <tr>
+                                @if($postulante->estudios_universidad || $postulante->cursando_universidad)
+                                    <td style="width:33%;">
+                                        <div class="edu-card">
+                                            <strong>Universidad</strong><br>
+                                            <span class="muted">{{ $postulante->cursando_universidad ? 'En curso' : 'Completado' }}</span>
+                                        </div>
+                                    </td>
+                                @endif
+
+                                @if($postulante->estudios_terciario || $postulante->cursando_terciario)
+                                    <td style="width:33%;">
+                                        <div class="edu-card">
+                                            <strong>Terciario</strong><br>
+                                            <span class="muted">{{ $postulante->cursando_terciario ? 'En curso' : 'Completado' }}</span>
+                                        </div>
+                                    </td>
+                                @endif
+
+                                @if($postulante->estudios_secundaria || $postulante->cursando_secundaria)
+                                    <td style="width:33%;">
+                                        <div class="edu-card">
+                                            <strong>Secundaria</strong><br>
+                                            <span class="muted">{{ $postulante->cursando_secundaria ? 'En curso' : 'Completado' }}</span>
+                                        </div>
+                                    </td>
+                                @endif
+                            </tr>
+                            <tr>
+                                @if($postulante->estudios_primaria || $postulante->cursando_primaria)
+                                    <td colspan="3" style="padding-top:8px;">
+                                        <div class="edu-card">
+                                            <strong>Primaria</strong><br>
+                                            <span class="muted">{{ $postulante->cursando_primaria ? 'En curso' : 'Completado' }}</span>
+                                        </div>
+                                    </td>
+                                @endif
+                            </tr>
+                        </table>
+                    @else
+                        <div class="muted">No especificado</div>
+                    @endif
+
+                    @if($postulante->estudios_cursados)
+                        <div style="margin-top:8px;" class="text-block">
+                            {{ $postulante->estudios_cursados }}
+                        </div>
+                    @endif
+                </div>
+
+                {{-- Experiencia --}}
+                <div class="section">
+                    <div class="section-title">Experiencia laboral</div>
+                    @if($postulante->experiencia_laboral)
+                        <div class="text-block">
+                            {!! nl2br(e($postulante->experiencia_laboral)) !!}
+                        </div>
+                    @else
+                        <div class="muted">No cargada</div>
+                    @endif
+                </div>
+
+                {{-- Habilidades / Skills --}}
+                <div class="section">
+                    <div class="section-title">Habilidades</div>
+                    <div class="skills">
+                        @php
+                            // ejemplo de extracción de skills si tenés texto. Si no, mostrar valores booleanos.
+                            $skills = [];
+                            // si tenes un campo separado, usarlo. Aquí intento fallback simple:
+                            if(!empty($postulante->habilidades)) {
+                                $skills = explode(',', $postulante->habilidades);
+                            }
+                        @endphp
+
+                        @if(!empty($skills))
+                            @foreach($skills as $s)
+                                <span class="skill">{{ trim($s) }}</span>
+                            @endforeach
+                        @else
+                            @if($postulante->movilidad_propia) <span class="skill">Movilidad propia</span> @endif
+                            @if($postulante->certificado_check) <span class="skill">Manipulación De Alimentos</span> @endif
+                            @if($postulante->carnet_check) <span class="skill">Registro de conducir</span> @endif
+                            @if(!$postulante->movilidad_propia && !$postulante->certificado_check && !$postulante->carnet_check)
+                                <div class="muted">No especificadas</div>
+                            @endif
+                        @endif
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer">CV generado por Sistema de Gestión de Postulantes - Municipalidad de Arroyo Seco | {{ date('d/m/Y') }}</div>
     </div>
 </body>
 </html>

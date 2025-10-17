@@ -10,7 +10,7 @@ use App\Models\Carnet;
 use App\Models\Localidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Log;
 
 class PostulanteController extends Controller
 {
@@ -120,18 +120,18 @@ class PostulanteController extends Controller
             'carnets.*' => 'exists:carnets,id',
         ]);
 
-        // Manejar checkboxes
-        $validated['certificado_check'] = $request->has('certificado_check');
-        $validated['carnet_check'] = $request->has('carnet_check');
-        $validated['movilidad_propia'] = $request->has('movilidad_propia');
-        $validated['estudios_primaria'] = $request->has('estudios_primaria');
-        $validated['estudios_secundaria'] = $request->has('estudios_secundaria');
-        $validated['estudios_terciario'] = $request->has('estudios_terciario');
-        $validated['estudios_universidad'] = $request->has('estudios_universidad');
-        $validated['cursando_primaria'] = $request->has('cursando_primaria');
-        $validated['cursando_secundaria'] = $request->has('cursando_secundaria');
-        $validated['cursando_terciario'] = $request->has('cursando_terciario');
-        $validated['cursando_universidad'] = $request->has('cursando_universidad');
+        // Manejar checkboxes (convertir a boolean)
+        $validated['certificado_check'] = $request->has('certificado_check') || $request->input('certificado_check') == '1';
+        $validated['carnet_check'] = $request->has('carnet_check') || $request->input('carnet_check') == '1';
+        $validated['movilidad_propia'] = $request->has('movilidad_propia') || $request->input('movilidad_propia') == '1';
+        $validated['estudios_primaria'] = $request->has('estudios_primaria') || $request->input('estudios_primaria') == '1';
+        $validated['estudios_secundaria'] = $request->has('estudios_secundaria') || $request->input('estudios_secundaria') == '1';
+        $validated['estudios_terciario'] = $request->has('estudios_terciario') || $request->input('estudios_terciario') == '1';
+        $validated['estudios_universidad'] = $request->has('estudios_universidad') || $request->input('estudios_universidad') == '1';
+        $validated['cursando_primaria'] = $request->has('cursando_primaria') || $request->input('cursando_primaria') == '1';
+        $validated['cursando_secundaria'] = $request->has('cursando_secundaria') || $request->input('cursando_secundaria') == '1';
+        $validated['cursando_terciario'] = $request->has('cursando_terciario') || $request->input('cursando_terciario') == '1';
+        $validated['cursando_universidad'] = $request->has('cursando_universidad') || $request->input('cursando_universidad') == '1';
 
         // Manejar foto
         if ($request->hasFile('foto')) {
@@ -150,9 +150,9 @@ class PostulanteController extends Controller
         }
 
         // Agregar rubros adicionales
-        if ($request->has('rubros_adicionales')) {
-            $rubrosIds = [$postulante->rubro_id]; // El principal ya está
-            
+        $rubrosIds = [$postulante->rubro_id]; // El principal ya está
+        
+        if ($request->has('rubros_adicionales') && is_array($request->rubros_adicionales)) {
             foreach ($request->rubros_adicionales as $nombreRubro) {
                 if (!empty(trim($nombreRubro))) {
                     $rubro = Rubro::where('rubro', trim($nombreRubro))->first();
@@ -161,15 +161,17 @@ class PostulanteController extends Controller
                     }
                 }
             }
-            
-            $postulante->rubros()->sync($rubrosIds);
-        } else {
-            // Solo sincronizar el rubro principal
-            $postulante->rubros()->sync([$postulante->rubro_id]);
         }
+        
+        // Sincronizar todos los rubros (principal + adicionales)
+        $postulante->rubros()->sync($rubrosIds);
 
         // Generar CV en PDF
-        $this->generarCVPDF($postulante);
+        try {
+            $this->generarCVPDF($postulante);
+        } catch (\Exception $e) {
+            Log::error('Error al generar CV: ' . $e->getMessage());
+        }
 
         return redirect()
             ->route('postulante_nuevo')
@@ -198,8 +200,6 @@ class PostulanteController extends Controller
             'rubro' => 'required|string|exists:rubros,rubro',
             'localidad' => 'nullable|string|max:250',
             'certificado_check' => 'nullable|in:0,1',
-            
-            // Foto nueva
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -230,7 +230,11 @@ class PostulanteController extends Controller
         $postulante->certificado_check = $request->input('certificado_check', 0);
 
         // Regenerar CV con los nuevos datos
-        $this->generarCVPDF($postulante);
+        try {
+            $this->generarCVPDF($postulante);
+        } catch (\Exception $e) {
+            Log::error('Error al regenerar CV: ' . $e->getMessage());
+        }
 
         $postulante->save();
 
@@ -267,7 +271,10 @@ class PostulanteController extends Controller
         // Cargar las relaciones necesarias para el CV
         $postulante->load(['rubro', 'rubros', 'carnets']);
         
+        // Configurar DomPDF
         $pdf = Pdf::loadView('pdf.cv', ['postulante' => $postulante]);
+        $pdf->setPaper('A4', 'portrait');
+        
         $filename = 'cv_' . $postulante->id . '_' . date('Y-m-d') . '.pdf';
         
         // Eliminar CV anterior si existe
@@ -275,10 +282,14 @@ class PostulanteController extends Controller
             Storage::disk('public')->delete("cvs/{$postulante->cv_pdf}");
         }
         
+        // Guardar el PDF
         Storage::disk('public')->put("cvs/{$filename}", $pdf->output());
         
+        // Actualizar el registro con el nombre del archivo
         $postulante->cv_pdf = $filename;
         $postulante->save();
+        
+        return $filename;
     }
 
     // Método para mostrar el CV en el navegador
@@ -306,6 +317,5 @@ class PostulanteController extends Controller
             storage_path("app/public/cvs/{$postulante->cv_pdf}"),
             "CV_{$postulante->nombre}_{$postulante->apellido}.pdf"
         );
-
     }
 }

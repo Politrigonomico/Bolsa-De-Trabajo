@@ -58,21 +58,17 @@ class EmpresaController extends Controller
             'email' => $validated['email'],
         ]);
 
-
         // Redirigir al listado con mensaje de éxito
         return redirect()
             ->route('buscar_empresa')
             ->with('success', 'Empresa creada correctamente.');
     }
 
-    // (Opcionales: show, edit, update, destroy si luego los vas a usar)
-
     public function edit(Empresa $empresa)
     {
         $empresa->load('rrhh'); 
         return view('buscar_empresa', compact('empresa'));
     }
-
 
     public function update(Request $request, Empresa $empresa)
     {
@@ -103,5 +99,24 @@ class EmpresaController extends Controller
         );
 
         return redirect()->route('buscar_empresa')->with('success', 'Empresa actualizada correctamente.');
+    }
+
+    /**
+     * Eliminar una empresa
+     */
+    public function destroy(Empresa $empresa)
+    {
+        try {
+            // Eliminar RRHH asociado (se hace automáticamente por cascade)
+            $empresa->delete();
+
+            return redirect()
+                ->route('buscar_empresa')
+                ->with('success', 'Empresa eliminada correctamente.');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('buscar_empresa')
+                ->with('error', 'Error al eliminar la empresa: ' . $e->getMessage());
+        }
     }
 }
