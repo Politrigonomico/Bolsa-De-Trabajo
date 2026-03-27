@@ -165,7 +165,7 @@
                         </td>
                     </tr>
 
-                    {{-- Fila Oculta para Edición --}}
+                    {{-- Fila Oculta para Edición  ACA!!!!!--}}
                     <tr id="form-row-{{ $postulante->id }}" class="hidden bg-gray-50">
                         <td colspan="10" class="px-4 py-4 border">
                             <form action="{{ route('postulantes.update', $postulante->id) }}" method="POST" class="space-y-4">

@@ -179,8 +179,7 @@ class InformeController extends Controller
             'filtros' => 'nullable|array',
         ]);
 
-        // Aquí implementarías la lógica para programar informes
-        // Podrías usar Laravel Scheduler o crear una tabla para informes programados
+        // Agregar logica para programar el envío del informe
 
         return redirect()
             ->route('informes.index')
