@@ -52,7 +52,7 @@
                 Empresas
             </a>
 
-            <a href="{{ route('configuracion') }}" class="mt-auto block px-4 py-3 text-sm font-semibold hover:bg-orange-700 transition text-orange-100">
+            <a href="{{ route('configuracion.index') }}" class="mt-auto block px-4 py-3 text-sm font-semibold hover:bg-orange-700 transition text-orange-100">
                 ⚙️ Configuraciones
             </a>
         </nav>

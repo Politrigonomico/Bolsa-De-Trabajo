@@ -11,52 +11,39 @@
     <form action="{{ route('busqueda') }}" method="GET" class="mb-6 bg-gray-50 border border-gray-200 rounded-lg p-4">
         <h3 class="text-lg font-semibold mb-4">Filtrar Postulantes</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {{-- Filtrar por Nombre --}}
             <div>
-                <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
-                <input type="text" name="nombre" id="nombre" value="{{ request('nombre') }}" placeholder="Ej. Juan"
+                <label class="block text-sm font-medium text-gray-700">Nombre</label>
+                <input type="text" name="nombre" value="{{ request('nombre') }}" placeholder="Ej. Juan"
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
             </div>
-
-            {{-- Filtrar por Apellido --}}
             <div>
-                <label for="apellido" class="block text-sm font-medium text-gray-700">Apellido</label>
-                <input type="text" name="apellido" id="apellido" value="{{ request('apellido') }}" placeholder="Ej. Pérez"
+                <label class="block text-sm font-medium text-gray-700">Apellido</label>
+                <input type="text" name="apellido" value="{{ request('apellido') }}" placeholder="Ej. Pérez"
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
             </div>
-
-            {{-- Filtrar por Profesión --}}
             <div>
-                <label for="rubro" class="block text-sm font-medium text-gray-700">Profesión</label>
-                <input type="text" name="rubro" id="rubro" value="{{ request('rubro') }}" placeholder="Ej. Electricista"
+                <label class="block text-sm font-medium text-gray-700">Profesión</label>
+                <input type="text" name="rubro" value="{{ request('rubro') }}" placeholder="Ej. Electricista"
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
             </div>
-
-            {{-- Edad Mínima --}}
             <div>
-                <label for="edad_min" class="block text-sm font-medium text-gray-700">Edad Mínima</label>
-                <input type="number" name="edad_min" id="edad_min" value="{{ request('edad_min') }}" placeholder="Ej. 25" min="0"
+                <label class="block text-sm font-medium text-gray-700">Edad Mínima</label>
+                <input type="number" name="edad_min" value="{{ request('edad_min') }}" placeholder="Ej. 25" min="0"
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
             </div>
-
-            {{-- Edad Máxima --}}
             <div>
-                <label for="edad_max" class="block text-sm font-medium text-gray-700">Edad Máxima</label>
-                <input type="number" name="edad_max" id="edad_max" value="{{ request('edad_max') }}" placeholder="Ej. 40" min="0"
+                <label class="block text-sm font-medium text-gray-700">Edad Máxima</label>
+                <input type="number" name="edad_max" value="{{ request('edad_max') }}" placeholder="Ej. 40" min="0"
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
             </div>
-
-            {{-- Tipo de Carnet --}}
             <div>
-                <label for="tipo_carnet" class="block text-sm font-medium text-gray-700">Tipo de Carnet</label>
-                <input type="text" name="tipo_carnet" id="tipo_carnet" value="{{ request('tipo_carnet') }}" placeholder="Ej. B1"
+                <label class="block text-sm font-medium text-gray-700">Tipo de Carnet</label>
+                <input type="text" name="tipo_carnet" value="{{ request('tipo_carnet') }}" placeholder="Ej. B1"
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
             </div>
-
-            {{-- Certificado --}}
             <div>
-                <label for="certificado_check" class="block text-sm font-medium text-gray-700">Certificado Manipulación</label>
-                <select name="certificado_check" id="certificado_check"
+                <label class="block text-sm font-medium text-gray-700">Certificado Manipulación</label>
+                <select name="certificado_check"
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
                     <option value="">Todos</option>
                     <option value="1" {{ request('certificado_check') === '1' ? 'selected' : '' }}>Sí</option>
@@ -64,14 +51,13 @@
                 </select>
             </div>
         </div>
-
-        <div class="mt-4 text-right">
+        <div class="mt-4 text-right space-x-2">
             <button type="submit"
-                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700">
                 Filtrar
             </button>
             <a href="{{ route('busqueda') }}"
-                class="ml-2 inline-flex items-center px-4 py-2 bg-gray-300 text-gray-700 text-sm font-medium rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                class="inline-flex items-center px-4 py-2 bg-gray-300 text-gray-700 text-sm font-medium rounded hover:bg-gray-400">
                 Limpiar filtros
             </a>
         </div>
@@ -92,21 +78,18 @@
                     <th class="px-3 py-2 border text-left">Localidad</th>
                     <th class="px-3 py-2 border text-left">Carnets</th>
                     <th class="px-3 py-2 border text-left">Certificado</th>
-                    <th class="px-3 py-2 border text-left" style="min-width: 200px;">Acciones</th>
+                    <th class="px-3 py-2 border text-left" style="min-width: 160px;">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($postulantes as $postulante)
+                    {{-- Fila resumen --}}
                     <tr class="hover:bg-gray-50">
                         <td class="px-3 py-2 border">{{ $postulante->nombre }}</td>
                         <td class="px-3 py-2 border">{{ $postulante->apellido }}</td>
                         <td class="px-3 py-2 border">{{ number_format($postulante->dni, 0, ',', '.') }}</td>
                         <td class="px-3 py-2 border">
-                            @if($postulante->fecha_nacimiento)
-                                {{ Carbon::parse($postulante->fecha_nacimiento)->age }}
-                            @else
-                                N/A
-                            @endif
+                            {{ $postulante->fecha_nacimiento ? Carbon::parse($postulante->fecha_nacimiento)->age : 'N/A' }}
                         </td>
                         <td class="px-3 py-2 border text-xs">{{ $postulante->email }}</td>
                         <td class="px-3 py-2 border">
@@ -124,39 +107,29 @@
                             @endif
                         </td>
                         <td class="px-3 py-2 border text-center">
-                            @if($postulante->certificado_check)
-                                <span class="text-green-600">✓</span>
-                            @else
-                                <span class="text-gray-400">-</span>
-                            @endif
+                            {{ $postulante->certificado_check ? '✓' : '-' }}
                         </td>
                         <td class="px-3 py-2 border">
                             <div class="flex flex-col space-y-1">
-                                {{-- Botón Editar --}}
                                 <button onclick="toggleForm({{ $postulante->id }})"
                                     class="text-left text-blue-600 hover:text-blue-800 text-xs font-medium">
                                     ✏️ Editar
                                 </button>
-                                
-                                {{-- Botón Ver CV --}}
-                                @if ($postulante->cv_pdf)
-                                    <a href="{{ route('postulantes.cv.mostrar', $postulante->id) }}" 
+                                @if($postulante->cv_pdf)
+                                    <a href="{{ route('postulantes.cv.mostrar', $postulante->id) }}"
                                        target="_blank"
                                        class="text-left text-green-600 hover:text-green-800 text-xs font-medium">
                                         📄 Ver CV
                                     </a>
                                 @else
-                                    <span class="text-gray-400 text-xs">CV no disponible</span>
+                                    <span class="text-gray-400 text-xs">Sin CV</span>
                                 @endif
-                                
-                                {{-- Botón Eliminar --}}
-                                <form action="{{ route('postulantes.destroy', $postulante->id) }}" 
-                                      method="POST" 
-                                      class="inline"
-                                      onsubmit="return confirm('¿Estás seguro de que querés eliminar este postulante?')">
+                                <form action="{{ route('postulantes.destroy', $postulante->id) }}"
+                                      method="POST"
+                                      onsubmit="return confirm('¿Eliminar a {{ addslashes($postulante->nombre) }} {{ addslashes($postulante->apellido) }}? Esta acción no se puede deshacer.')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" 
+                                    <button type="submit"
                                             class="text-left text-red-600 hover:text-red-800 text-xs font-medium">
                                         🗑️ Eliminar
                                     </button>
@@ -165,84 +138,195 @@
                         </td>
                     </tr>
 
-                    {{-- Fila Oculta para Edición  ACA!!!!!--}}
-                    <tr id="form-row-{{ $postulante->id }}" class="hidden bg-gray-50">
+                    {{-- Fila de edición inline --}}
+                    <tr id="form-row-{{ $postulante->id }}" class="hidden bg-blue-50">
                         <td colspan="10" class="px-4 py-4 border">
-                            <form action="{{ route('postulantes.update', $postulante->id) }}" method="POST" class="space-y-4">
+                            <form action="{{ route('postulantes.update', $postulante->id) }}"
+                                  method="POST"
+                                  enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 
-                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {{-- 1. Datos personales --}}
+                                <p class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2 mt-1">
+                                    👤 Datos personales
+                                </p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
                                     <div>
-                                        <label class="block font-semibold text-gray-700 text-sm">Nombre</label>
+                                        <label class="block text-xs font-semibold text-gray-700 mb-1">Nombre *</label>
                                         <input type="text" name="nombre" value="{{ $postulante->nombre }}"
-                                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                            class="w-full border-gray-300 rounded-md shadow-sm text-sm" required>
                                     </div>
-
                                     <div>
-                                        <label class="block font-semibold text-gray-700 text-sm">Apellido</label>
+                                        <label class="block text-xs font-semibold text-gray-700 mb-1">Apellido *</label>
                                         <input type="text" name="apellido" value="{{ $postulante->apellido }}"
-                                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                            class="w-full border-gray-300 rounded-md shadow-sm text-sm" required>
                                     </div>
-
                                     <div>
-                                        <label class="block font-semibold text-gray-700 text-sm">DNI</label>
-                                        <input type="text" name="dni" value="{{ $postulante->dni }}"
-                                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                        <label class="block text-xs font-semibold text-gray-700 mb-1">DNI *</label>
+                                        <input type="number" name="dni" value="{{ $postulante->dni }}"
+                                            class="w-full border-gray-300 rounded-md shadow-sm text-sm" required>
                                     </div>
-
                                     <div>
-                                        <label class="block font-semibold text-gray-700 text-sm">Fecha de Nacimiento</label>
-                                            <input
-                                            type="date"
-                                            name="fecha_nacimiento"
-                                            value="{{ $postulante->fecha_nacimiento }}"
-                                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                        <label class="block text-xs font-semibold text-gray-700 mb-1">Fecha de Nacimiento *</label>
+                                        <input type="date" name="fecha_nacimiento"
+                                            value="{{ $postulante->fecha_nacimiento ? Carbon::parse($postulante->fecha_nacimiento)->format('Y-m-d') : '' }}"
+                                            class="w-full border-gray-300 rounded-md shadow-sm text-sm" required>
                                     </div>
-
                                     <div>
-                                        <label class="block font-semibold text-gray-700 text-sm">Correo</label>
+                                        <label class="block text-xs font-semibold text-gray-700 mb-1">Email</label>
                                         <input type="email" name="email" value="{{ $postulante->email }}"
-                                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                            class="w-full border-gray-300 rounded-md shadow-sm text-sm">
                                     </div>
-
                                     <div>
-                                        <label class="block font-semibold text-gray-700 text-sm">Profesión (Rubro)</label>
-                                        <input list="rubros-list-{{ $postulante->id }}" name="rubro"
-                                            value="{{ old('rubro', optional($postulante->rubro)->rubro) }}"
-                                            placeholder="Elegí o escribí"
-                                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                        <datalist id="rubros-list-{{ $postulante->id }}">
-                                            @foreach($rubros as $r)
-                                                <option value="{{ $r->rubro }}"></option>
-                                            @endforeach
-                                        </datalist>
+                                        <label class="block text-xs font-semibold text-gray-700 mb-1">Teléfono</label>
+                                        <input type="text" name="telefono" value="{{ $postulante->telefono }}"
+                                            class="w-full border-gray-300 rounded-md shadow-sm text-sm">
                                     </div>
-
                                     <div>
-                                        <label class="block font-semibold text-gray-700 text-sm">Localidad</label>
+                                        <label class="block text-xs font-semibold text-gray-700 mb-1">Domicilio</label>
+                                        <input type="text" name="domicilio" value="{{ $postulante->domicilio }}"
+                                            class="w-full border-gray-300 rounded-md shadow-sm text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-gray-700 mb-1">Localidad</label>
                                         <input type="text" name="localidad" value="{{ $postulante->localidad }}"
-                                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                            class="w-full border-gray-300 rounded-md shadow-sm text-sm">
                                     </div>
-
                                     <div>
-                                        <label class="block font-semibold text-gray-700 text-sm">Certificado Manipulación</label>
-                                        <select name="certificado_check"
-                                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                            <option value="1" {{ $postulante->certificado_check ? 'selected' : '' }}>Sí</option>
-                                            <option value="0" {{ !$postulante->certificado_check ? 'selected' : '' }}>No</option>
+                                        <label class="block text-xs font-semibold text-gray-700 mb-1">Profesión Principal *</label>
+                                        <select name="rubro_id"
+                                            class="w-full border-gray-300 rounded-md shadow-sm text-sm" required>
+                                            @foreach($rubros as $r)
+                                                <option value="{{ $r->id }}"
+                                                    {{ $postulante->rubro_id == $r->id ? 'selected' : '' }}>
+                                                    {{ $r->rubro }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
 
-                                <div class="text-right mt-4">
+                                {{-- 2. Profesiones adicionales --}}
+                                <p class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
+                                    💼 Profesiones adicionales
+                                </p>
+                                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-1 max-h-28 overflow-y-auto border border-gray-200 rounded p-2 bg-white mb-5">
+                                    @foreach($rubros as $r)
+                                        @if($r->id !== $postulante->rubro_id)
+                                            <label class="flex items-center text-xs cursor-pointer hover:bg-gray-50 p-1 rounded">
+                                                <input type="checkbox"
+                                                       name="rubros_adicionales[]"
+                                                       value="{{ $r->id }}"
+                                                       class="mr-1"
+                                                       {{ $postulante->rubros->contains('id', $r->id) && $r->id !== $postulante->rubro_id ? 'checked' : '' }}>
+                                                {{ $r->rubro }}
+                                            </label>
+                                        @endif
+                                    @endforeach
+                                </div>
+
+                                {{-- 3. Carnets --}}
+                                @if(isset($carnets) && $carnets->count() > 0)
+                                <p class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
+                                    🚗 Carnets de conducir
+                                </p>
+                                <div class="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-8 gap-1 border border-gray-200 rounded p-2 bg-white mb-5">
+                                    @foreach($carnets as $carnet)
+                                        <label class="flex items-center text-xs cursor-pointer hover:bg-gray-50 p-1 rounded"
+                                               title="{{ $carnet->descripcion }}">
+                                            <input type="checkbox"
+                                                   name="carnets[]"
+                                                   value="{{ $carnet->id }}"
+                                                   class="mr-1"
+                                                   {{ $postulante->carnets->contains('id', $carnet->id) ? 'checked' : '' }}>
+                                            <span class="font-semibold text-blue-700">{{ $carnet->tipo_carnet }}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                                @endif
+
+                                {{-- 4. Estudios --}}
+                                <p class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
+                                    🎓 Estudios
+                                </p>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                                    @foreach(['primaria' => 'Primaria', 'secundaria' => 'Secundaria', 'terciario' => 'Terciario', 'universidad' => 'Universidad'] as $key => $label)
+                                        <div class="bg-white border border-gray-200 rounded p-2 text-xs">
+                                            <p class="font-semibold text-gray-700 mb-1">{{ $label }}</p>
+                                            <label class="flex items-center mb-1 cursor-pointer">
+                                                <input type="checkbox"
+                                                       name="estudios_{{ $key }}"
+                                                       value="1"
+                                                       class="mr-1"
+                                                       {{ $postulante->{'estudios_' . $key} ? 'checked' : '' }}>
+                                                Completado
+                                            </label>
+                                            <label class="flex items-center cursor-pointer">
+                                                <input type="checkbox"
+                                                       name="cursando_{{ $key }}"
+                                                       value="1"
+                                                       class="mr-1"
+                                                       {{ $postulante->{'cursando_' . $key} ? 'checked' : '' }}>
+                                                En curso
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="mb-5">
+                                    <label class="block text-xs font-semibold text-gray-700 mb-1">
+                                        Detalle de estudios
+                                    </label>
+                                    <textarea name="estudios_cursados" rows="2"
+                                        class="w-full border-gray-300 rounded-md shadow-sm text-sm"
+                                        placeholder="Títulos, instituciones, certificaciones...">{{ $postulante->estudios_cursados }}</textarea>
+                                </div>
+
+                                {{-- 5. Experiencia laboral --}}
+                                <p class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
+                                    💪 Experiencia laboral
+                                </p>
+                                <div class="mb-5">
+                                    <textarea name="experiencia_laboral" rows="3"
+                                        class="w-full border-gray-300 rounded-md shadow-sm text-sm"
+                                        placeholder="Empleos anteriores, responsabilidades, años de experiencia...">{{ $postulante->experiencia_laboral }}</textarea>
+                                </div>
+
+                                {{-- 6. Competencias y foto --}}
+                                <p class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
+                                    ⭐ Competencias y foto
+                                </p>
+                                <div class="flex flex-wrap gap-6 mb-4">
+                                    <label class="flex items-center text-sm cursor-pointer">
+                                        <input type="checkbox" name="certificado_check" value="1"
+                                               class="mr-2"
+                                               {{ $postulante->certificado_check ? 'checked' : '' }}>
+                                        🍽️ Certificado de Manipulación
+                                    </label>
+                                    <label class="flex items-center text-sm cursor-pointer">
+                                        <input type="checkbox" name="movilidad_propia" value="1"
+                                               class="mr-2"
+                                               {{ $postulante->movilidad_propia ? 'checked' : '' }}>
+                                        🏍️ Movilidad Propia
+                                    </label>
+                                    <div class="flex items-center gap-2">
+                                        <label class="text-sm font-medium text-gray-700">📷 Foto:</label>
+                                        <input type="file" name="foto" accept="image/*"
+                                               class="text-xs text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-50 file:text-blue-700"
+                                               {{ $postulante->foto }}>
+                                        <span class="text-xs text-gray-400">(vacío = mantener actual)</span>
+                                    </div>
+                                </div>
+
+                                {{-- Botones --}}
+                                <div class="text-right space-x-2 border-t border-blue-200 pt-3 mt-2">
                                     <button type="button" onclick="toggleForm({{ $postulante->id }})"
-                                        class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 mr-2">
+                                        class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 text-sm">
                                         Cancelar
                                     </button>
                                     <button type="submit"
-                                        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                                        Guardar
+                                        class="bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700 text-sm font-medium">
+                                        💾 Guardar cambios
                                     </button>
                                 </div>
                             </form>
@@ -255,9 +339,9 @@
 </div>
 
 <script>
-    function toggleForm(id) {
-        const row = document.getElementById('form-row-' + id);
-        row.classList.toggle('hidden');
-    }
+function toggleForm(id) {
+    const row = document.getElementById('form-row-' + id);
+    row.classList.toggle('hidden');
+}
 </script>
 @endsection

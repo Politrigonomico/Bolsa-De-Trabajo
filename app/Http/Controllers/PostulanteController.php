@@ -16,28 +16,25 @@ class PostulanteController extends Controller
 {
     public function index(Request $request)
     {
-        $rubros = Rubro::all();
+        $rubros  = Rubro::orderBy('rubro')->get();
+        $carnets = Carnet::orderBy('tipo_carnet')->get();
+
         $query = Postulante::with(['rubro', 'rubros', 'carnets']);
 
-        // Filtros existentes
         if ($request->filled('nombre')) {
-            $query->where('nombre', 'like', '%'.$request->nombre.'%');
+            $query->where('nombre', 'like', '%' . $request->nombre . '%');
         }
-
         if ($request->filled('apellido')) {
-            $query->where('apellido', 'like', '%'.$request->apellido.'%');
+            $query->where('apellido', 'like', '%' . $request->apellido . '%');
         }
-
         if ($request->filled('rubro')) {
-            $query->whereHas('rubro', function($q) use ($request) {
-                $q->where('rubro', 'like', '%'.$request->rubro.'%');
+            $query->whereHas('rubro', function ($q) use ($request) {
+                $q->where('rubro', 'like', '%' . $request->rubro . '%');
             });
         }
 
-        // Filtro por rango de edad
         $edadMin = $request->input('edad_min');
         $edadMax = $request->input('edad_max');
-
         $tieneMin = is_numeric($edadMin) && $edadMin !== '';
         $tieneMax = is_numeric($edadMax) && $edadMax !== '';
 
@@ -45,29 +42,26 @@ class PostulanteController extends Controller
             $fechaMax = Carbon::now()->subYears((int)$edadMin)->endOfDay();
             $fechaMin = Carbon::now()->subYears((int)$edadMax + 1)->addDay()->startOfDay();
             $query->whereBetween('fecha_nacimiento', [$fechaMin, $fechaMax]);
-        }
-        elseif ($tieneMin) {
+        } elseif ($tieneMin) {
             $fechaMax = Carbon::now()->subYears((int)$edadMin)->endOfDay();
             $query->where('fecha_nacimiento', '<=', $fechaMax);
-        }
-        elseif ($tieneMax) {
+        } elseif ($tieneMax) {
             $fechaMin = Carbon::now()->subYears((int)$edadMax + 1)->addDay()->startOfDay();
             $query->where('fecha_nacimiento', '>=', $fechaMin);
         }
 
         if ($request->filled('tipo_carnet')) {
-            $query->whereHas('carnets', function($q) use ($request) {
-                $q->where('tipo_carnet', 'like', '%'.$request->tipo_carnet.'%');
+            $query->whereHas('carnets', function ($q) use ($request) {
+                $q->where('tipo_carnet', 'like', '%' . $request->tipo_carnet . '%');
             });
         }
-
         if ($request->filled('certificado_check')) {
             $query->where('certificado_check', $request->certificado_check);
         }
 
         $postulantes = $query->latest()->get();
 
-        return view('busqueda', compact('postulantes', 'rubros'));
+        return view('busqueda', compact('postulantes', 'rubros', 'carnets'));
     }
 
     public function create()
@@ -192,55 +186,87 @@ class PostulanteController extends Controller
         $postulante = Postulante::findOrFail($id);
 
         $validated = $request->validate([
-            'nombre' => 'required|string|max:250',
-            'apellido' => 'required|string|max:250',
-            'dni' => 'required|integer|unique:postulantes,dni,' . $postulante->id,
-            'fecha_nacimiento' => 'required|date',
-            'email' => 'nullable|email|max:250|unique:postulantes,email,' . $postulante->id,
-            'rubro' => 'required|string|exists:rubros,rubro',
-            'localidad' => 'nullable|string|max:250',
-            'certificado_check' => 'nullable|in:0,1',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'nombre'               => 'required|string|max:250',
+            'apellido'             => 'required|string|max:250',
+            'dni'                  => 'required|integer|unique:postulantes,dni,' . $postulante->id,
+            'fecha_nacimiento'     => 'required|date',
+            'telefono'             => 'nullable|string|max:20',
+            'email'                => 'nullable|email|max:250|unique:postulantes,email,' . $postulante->id,
+            'domicilio'            => 'nullable|string|max:250',
+            'localidad'            => 'nullable|string|max:250',
+            'rubro_id'             => 'required|exists:rubros,id',
+            'experiencia_laboral'  => 'nullable|string|max:1000',
+            'estudios_cursados'    => 'nullable|string|max:500',
+            'certificado_check'    => 'nullable|in:0,1',
+            'movilidad_propia'     => 'nullable|in:0,1',
+            'foto'                 => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'carnets'              => 'nullable|array',
+            'carnets.*'            => 'exists:carnets,id',
+            'rubros_adicionales'   => 'nullable|array',
+            'rubros_adicionales.*' => 'exists:rubros,id',
         ]);
 
-        // Actualizar campos básicos
-        $postulante->fill($validated);
+        // Campos básicos
+        $postulante->nombre              = $validated['nombre'];
+        $postulante->apellido            = $validated['apellido'];
+        $postulante->dni                 = $validated['dni'];
+        $postulante->fecha_nacimiento    = $validated['fecha_nacimiento'];
+        $postulante->telefono            = $validated['telefono']           ?? $postulante->telefono;
+        $postulante->email               = $validated['email']              ?? $postulante->email;
+        $postulante->domicilio           = $validated['domicilio']          ?? $postulante->domicilio;
+        $postulante->localidad           = $validated['localidad']          ?? $postulante->localidad;
+        $postulante->rubro_id            = $validated['rubro_id'];
+        $postulante->experiencia_laboral = $validated['experiencia_laboral'] ?? null;
+        $postulante->estudios_cursados   = $validated['estudios_cursados']   ?? null;
+        $postulante->certificado_check   = $request->has('certificado_check') ? 1 : 0;
+        $postulante->movilidad_propia    = $request->has('movilidad_propia')  ? 1 : 0;
 
-        // Manejar foto nueva
+        // Estudios por nivel (checkboxes — ausente = false)
+        $postulante->estudios_primaria    = $request->has('estudios_primaria')    ? 1 : 0;
+        $postulante->estudios_secundaria  = $request->has('estudios_secundaria')  ? 1 : 0;
+        $postulante->estudios_terciario   = $request->has('estudios_terciario')   ? 1 : 0;
+        $postulante->estudios_universidad = $request->has('estudios_universidad') ? 1 : 0;
+        $postulante->cursando_primaria    = $request->has('cursando_primaria')    ? 1 : 0;
+        $postulante->cursando_secundaria  = $request->has('cursando_secundaria')  ? 1 : 0;
+        $postulante->cursando_terciario   = $request->has('cursando_terciario')   ? 1 : 0;
+        $postulante->cursando_universidad = $request->has('cursando_universidad') ? 1 : 0;
+
+        // Foto nueva (opcional)
         if ($request->hasFile('foto')) {
-            // Eliminar foto anterior si existe
             if ($postulante->foto) {
                 Storage::disk('public')->delete('fotos/' . $postulante->foto);
             }
-            
             $foto = $request->file('foto');
             $nombreFoto = 'foto_' . $postulante->id . '_' . time() . '.' . $foto->getClientOriginalExtension();
             $foto->storeAs('fotos', $nombreFoto, 'public');
             $postulante->foto = $nombreFoto;
         }
 
-        // Actualizar rubro
-        if (!empty($validated['rubro'])) {
-            $rubroObj = Rubro::where('rubro', $validated['rubro'])->first();
-            if ($rubroObj) {
-                $postulante->rubro_id = $rubroObj->id;
+        $postulante->save();
+
+        // Sincronizar carnets
+        $postulante->carnets()->sync($request->input('carnets', []));
+
+        // Sincronizar rubros (principal + adicionales sin duplicar)
+        $rubrosIds = [(int) $postulante->rubro_id];
+        foreach ($request->input('rubros_adicionales', []) as $rubroId) {
+            $rubroId = (int) $rubroId;
+            if ($rubroId && !in_array($rubroId, $rubrosIds)) {
+                $rubrosIds[] = $rubroId;
             }
         }
+        $postulante->rubros()->sync($rubrosIds);
 
-        $postulante->certificado_check = $request->input('certificado_check', 0);
-
-        // Regenerar CV con los nuevos datos
+        // Regenerar CV
         try {
             $this->generarCVPDF($postulante);
         } catch (\Exception $e) {
-            Log::error('Error al regenerar CV: ' . $e->getMessage());
+            Log::error('Error al regenerar CV en update: ' . $e->getMessage());
         }
-
-        $postulante->save();
 
         return redirect()
             ->route('busqueda')
-            ->with('success', 'Postulante actualizado correctamente. CV regenerado.');
+            ->with('success', 'Postulante actualizado correctamente.');
     }
 
     public function destroy($id)

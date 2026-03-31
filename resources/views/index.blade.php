@@ -38,7 +38,7 @@
     </div>
 
     <div class="mt-10 text-center">
-        <a href="{{ route('configuracion') }}" 
+        <a href="{{ route('configuracion.index') }}" 
            class="text-sm text-orange-800 hover:text-orange-600 font-semibold transition">
             ⚙️ CONFIGURACIONES
         </a>
