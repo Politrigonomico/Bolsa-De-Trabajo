@@ -332,7 +332,7 @@
             <div class="space-y-6">
                 <div>
                     <label for="experiencia_laboral" class="block font-medium mb-2 text-gray-700">Experiencia Laboral</label>
-                    <textarea id="experiencia_laboral" name="experiencia_laboral" rows="4"
+                    <textarea id="experiencia_laboral" name="experiencia_laboral" rows="4" 
                               class="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
                               placeholder="Describa su experiencia laboral previa, empleos, responsabilidades, etc.">{{ old('experiencia_laboral') }}</textarea>
                     @error('experiencia_laboral')

@@ -4,9 +4,9 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto bg-white rounded-lg shadow p-8">
-    <h1 class="text-3xl font-bold mb-6 text-center">Portal de CV - Municipalidad</h1>
+    <h1 class="text-3xl font-bold mb-6 text-center">Portal de CV - Comuna De Fighiera</h1>
     <p class="text-gray-700 text-center mb-8">
-        Este portal te permite gestionar los ingresos y búsquedas de postulantes y empresas de la Municipalidad.
+        Este portal te permite gestionar los ingresos y búsquedas de postulantes y empresas de la Comuna.
     </p>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">

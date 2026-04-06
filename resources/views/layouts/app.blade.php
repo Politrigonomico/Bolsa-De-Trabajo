@@ -12,8 +12,8 @@
     <aside class="w-64 bg-gradient-to-b from-orange-600 to-orange-500 text-white flex flex-col h-screen fixed top-0 left-0 shadow-lg z-50">
         <div class="flex items-center justify-center h-16 border-b border-orange-700">
             <a href="{{ route('index') }}" class="flex items-center space-x-2">
-                <img src="{{ asset('images/logo_oficial.jpg') }}" alt="Logo" class="h-10 w-10 rounded-md shadow" />
-                <span class="font-extrabold text-xl tracking-wide">Bolsa de Trabajo</span>
+                <img src="{{ asset('images/') }}" alt="Logo" class="h-10 w-10 rounded-md shadow" />
+                <span class="font-extrabold text-xl tracking-wide">Oficina De Empleo</span>
             </a>
         </div>
 
@@ -58,7 +58,7 @@
         </nav>
 
         <footer class="px-4 py-3 border-t border-orange-700 text-center text-sm text-orange-100">
-            &copy; {{ date('Y') }} Bolsa de Trabajo — Municipalidad
+            &copy; {{ date('Y') }} Oficina De Empleo — Comuna De Fighiera. Todos los derechos reservados.
         </footer>
     </aside>
 

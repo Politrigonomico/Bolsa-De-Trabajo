@@ -285,6 +285,7 @@
                                 <th class="px-4 py-3 text-left text-xs font-semibold uppercase">Localidad</th>
                                 <th class="px-4 py-3 text-left text-xs font-semibold uppercase">Competencias</th>
                                 <th class="px-4 py-3 text-left text-xs font-semibold uppercase">Registro</th>
+                                <th class="px-4 py-3 text-left text-xs font-semibold uppercase">Teléfono</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -322,6 +323,7 @@
                                         </div>
                                     </td>
                                     <td class="px-4 py-3 text-sm text-gray-500">{{ $postulante->created_at->format('d/m/Y') }}</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">{{ $postulante->telefono }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

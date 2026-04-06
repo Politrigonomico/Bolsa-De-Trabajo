@@ -27,39 +27,58 @@ class PostulanteController extends Controller
         if ($request->filled('apellido')) {
             $query->where('apellido', 'like', '%' . $request->apellido . '%');
         }
-        if ($request->filled('rubro')) {
-            $query->whereHas('rubro', function ($q) use ($request) {
-                $q->where('rubro', 'like', '%' . $request->rubro . '%');
+
+        // Profesión ahora llega como rubro_id (integer desde el select)
+        if ($request->filled('rubro_id')) {
+            $rubroId = $request->rubro_id;
+            $query->where(function ($q) use ($rubroId) {
+                $q->where('rubro_id', $rubroId)
+                  ->orWhereHas('rubros', function ($sq) use ($rubroId) {
+                      $sq->where('rubros.id', $rubroId);
+                  });
             });
         }
 
-        $edadMin = $request->input('edad_min');
-        $edadMax = $request->input('edad_max');
+        if ($request->filled('sexo')) {
+            $query->where('sexo', $request->sexo);
+        }
+        if ($request->filled('localidad')) {
+            $query->where('localidad', 'like', '%' . $request->localidad . '%');
+        }
+
+        // Rango de edad
+        $edadMin  = $request->input('edad_min');
+        $edadMax  = $request->input('edad_max');
         $tieneMin = is_numeric($edadMin) && $edadMin !== '';
         $tieneMax = is_numeric($edadMax) && $edadMax !== '';
 
         if ($tieneMin && $tieneMax) {
-            $fechaMax = Carbon::now()->subYears((int)$edadMin)->endOfDay();
-            $fechaMin = Carbon::now()->subYears((int)$edadMax + 1)->addDay()->startOfDay();
-            $query->whereBetween('fecha_nacimiento', [$fechaMin, $fechaMax]);
+            $query->whereBetween('fecha_nacimiento', [
+                Carbon::now()->subYears((int) $edadMax + 1)->addDay()->startOfDay(),
+                Carbon::now()->subYears((int) $edadMin)->endOfDay(),
+            ]);
         } elseif ($tieneMin) {
-            $fechaMax = Carbon::now()->subYears((int)$edadMin)->endOfDay();
-            $query->where('fecha_nacimiento', '<=', $fechaMax);
+            $query->where('fecha_nacimiento', '<=', Carbon::now()->subYears((int) $edadMin)->endOfDay());
         } elseif ($tieneMax) {
-            $fechaMin = Carbon::now()->subYears((int)$edadMax + 1)->addDay()->startOfDay();
-            $query->where('fecha_nacimiento', '>=', $fechaMin);
+            $query->where('fecha_nacimiento', '>=', Carbon::now()->subYears((int) $edadMax + 1)->addDay()->startOfDay());
         }
 
-        if ($request->filled('tipo_carnet')) {
-            $query->whereHas('carnets', function ($q) use ($request) {
-                $q->where('tipo_carnet', 'like', '%' . $request->tipo_carnet . '%');
+        // Carnets — debe tener TODOS los seleccionados
+        $carnetsFiltro = array_filter((array) $request->input('carnets', []));
+        foreach ($carnetsFiltro as $carnetId) {
+            $query->whereHas('carnets', function ($q) use ($carnetId) {
+                $q->where('carnets.id', $carnetId);
             });
         }
+
         if ($request->filled('certificado_check')) {
             $query->where('certificado_check', $request->certificado_check);
         }
+        if ($request->filled('movilidad_propia')) {
+            $query->where('movilidad_propia', $request->movilidad_propia);
+        }
 
-        $postulantes = $query->latest()->get();
+        $postulantes = $query->orderBy('apellido')->get();
 
         return view('busqueda', compact('postulantes', 'rubros', 'carnets'));
     }
@@ -86,8 +105,8 @@ class PostulanteController extends Controller
             'fecha_nacimiento' => 'required|date',
             'estado_civil' => 'required|string|max:50',
             'rubro_id' => 'required|exists:rubros,id',
-            'experiencia_laboral' => 'nullable|string|max:500',
-            'estudios_cursados' => 'nullable|string|max:500',
+            'experiencia_laboral' => 'nullable|string|max:700',
+            'estudios_cursados'   => 'nullable|string|max:600',
             
             // Estudios por nivel
             'estudios_primaria' => 'nullable|boolean',
@@ -195,8 +214,8 @@ class PostulanteController extends Controller
             'domicilio'            => 'nullable|string|max:250',
             'localidad'            => 'nullable|string|max:250',
             'rubro_id'             => 'required|exists:rubros,id',
-            'experiencia_laboral'  => 'nullable|string|max:1000',
-            'estudios_cursados'    => 'nullable|string|max:500',
+            'experiencia_laboral' => 'nullable|string|max:700',
+            'estudios_cursados'   => 'nullable|string|max:600',
             'certificado_check'    => 'nullable|in:0,1',
             'movilidad_propia'     => 'nullable|in:0,1',
             'foto'                 => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',

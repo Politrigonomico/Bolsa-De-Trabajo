@@ -206,6 +206,7 @@
                 <th>Localidad</th>
                 <th>Competencias</th>
                 <th style="width:55px;">Registro</th>
+                <th>Teléfono</th>
             </tr>
         </thead>
         <tbody>
@@ -231,13 +232,14 @@
                         @endif
                     </td>
                     <td>{{ $postulante->created_at->format('d/m/Y') }}</td>
+                    <td>{{ $postulante->telefono }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
     <div class="footer">
-        Sistema de Gestión de Postulantes — Municipalidad de Arroyo Seco &bull; {{ date('d/m/Y') }}
+        Sistema de Gestión de Postulantes — Oficina De Empleo Fighiera &bull; {{ date('d/m/Y') }}
     </div>
 
 </body>

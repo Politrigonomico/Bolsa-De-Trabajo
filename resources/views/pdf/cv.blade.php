@@ -20,7 +20,7 @@
             display: table-cell;
             width: 85mm;
             vertical-align: top;
-            background: #0f172a; /* oscuro */
+            background: #020407; /* oscuro */
             color: #ffffff;
             padding: 18px 14px;
         }
@@ -195,12 +195,13 @@
                 <div class="side-section">
                     <div class="title">Carnets / Certif.</div>
                     @if($postulante->carnets && $postulante->carnets->count() > 0)
-                        @foreach($postulante->carnets as $c)
-                            <div style="margin-bottom:6px; font-size:9.5pt;">
-                                <strong>{{ $c->tipo_carnet ?? $c->carnetTipo }}</strong><br>
-                                <span class="muted" style="font-size:8.8pt;">{{ Str::limit($c->descripcion, 70) }}</span>
-                            </div>
-                        @endforeach
+                        <div style="display:flex; flex-wrap:wrap; gap:4px;">
+                            @foreach($postulante->carnets as $c)
+                                <span style="background:rgba(255,255,255,0.12); color:#fff; padding:3px 8px; border-radius:8px; font-size:8.5pt; font-weight:700;">
+                                    {{ $c->tipo_carnet ?? $c->carnetTipo }}
+                                </span>
+                            @endforeach
+                        </div>
                     @else
                         <div class="muted">No cargados</div>
                     @endif
@@ -223,10 +224,6 @@
             <!-- MAIN -->
             <div class="main">
                 <div class="header-main">
-                    <div>
-                        <div class="name-main">{{ $postulante->nombre }} {{ $postulante->apellido }}</div>
-                        <div class="role-main">{{ $postulante->rubro ? $postulante->rubro->rubro : 'Profesional' }}</div>
-                    </div>
                     <div style="text-align:right;">
                         <div class="muted" style="font-size:9pt;">CV generado: {{ date('d/m/Y') }}</div>
                     </div>
@@ -316,39 +313,12 @@
                         <div class="muted">No cargada</div>
                     @endif
                 </div>
-
-                {{-- Habilidades / Skills --}}
-                <div class="section">
-                    <div class="section-title">Habilidades</div>
-                    <div class="skills">
-                        @php
-                            // ejemplo de extracción de skills si tenés texto. Si no, mostrar valores booleanos.
-                            $skills = [];
-                            // si tenes un campo separado, usarlo. Aquí intento fallback simple:
-                            if(!empty($postulante->habilidades)) {
-                                $skills = explode(',', $postulante->habilidades);
-                            }
-                        @endphp
-
-                        @if(!empty($skills))
-                            @foreach($skills as $s)
-                                <span class="skill">{{ trim($s) }}</span>
-                            @endforeach
-                        @else
-                            @if($postulante->movilidad_propia) <span class="skill">Movilidad propia</span> @endif
-                            @if($postulante->certificado_check) <span class="skill">Manipulación De Alimentos</span> @endif
-                            @if($postulante->carnet_check) <span class="skill">Registro de conducir</span> @endif
-                            @if(!$postulante->movilidad_propia && !$postulante->certificado_check && !$postulante->carnet_check)
-                                <div class="muted">No especificadas</div>
-                            @endif
-                        @endif
-                    </div>
                 </div>
 
             </div>
         </div>
 
-        <div class="footer">CV generado por Sistema de Gestión de Postulantes - Municipalidad de Arroyo Seco | {{ date('d/m/Y') }}</div>
+        <div class="footer">CV generado por Sistema de Gestión de Postulantes - Oficina De Empleo Fighiera | {{ date('d/m/Y') }}</div>
     </div>
 </body>
 </html>
