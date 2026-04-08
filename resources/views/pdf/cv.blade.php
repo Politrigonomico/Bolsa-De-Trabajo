@@ -20,7 +20,7 @@
             display: table-cell;
             width: 85mm;
             vertical-align: top;
-            background: #020407; /* oscuro */
+            background:  #349379db; /* oscuro */
             color: #ffffff;
             padding: 18px 14px;
         }
@@ -45,16 +45,16 @@
 
         /* Name & title in sidebar */
         .side-name { text-align:center; font-size:16pt; font-weight:700; margin-bottom:4px; letter-spacing:0.6px; }
-        .side-role { text-align:center; font-size:10pt; opacity:0.95; margin-bottom:12px; }
+        .side-role { text-align:center; font-size:10.5pt; opacity:0.95; margin-bottom:12px; }
 
         /* Contact list */
-        .contact { font-size:9.5pt; line-height:1.45; margin-top:8px; }
+        .contact { font-size:10pt; line-height:1.45; margin-top:8px; }
         .contact .item { margin-bottom:6px; display:block; }
-        .contact .label { font-weight:700; font-size:8.5pt; color: rgba(255,255,255,0.8); display:block; margin-bottom:2px; text-transform:uppercase; letter-spacing:0.6px; }
+        .contact .label { font-weight:700; font-size:10pt; color: rgba(255,255,255,0.8); display:block; margin-bottom:2px; text-transform:uppercase; letter-spacing:0.6px; }
 
         /* Sidebar sections */
         .side-section { margin-top:14px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.06); }
-        .side-section .title { font-size:9pt; color: rgba(255,255,255,0.9); font-weight:700; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.6px; }
+        .side-section .title { font-size:10pt; color: rgba(255,255,255,0.9); font-weight:700; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.6px; }
 
         .badge { display:inline-block; padding:5px 8px; border-radius:12px; font-size:9pt; margin:3px 3px 3px 0; background:#e6f0ff; color:#0f172a; }
 
@@ -96,7 +96,7 @@
         .skill { display:inline-block; padding:6px 10px; margin:4px 5px 4px 0; border-radius:14px; font-size:9.5pt; background:#f1f5f9; color:#0b3b8a; }
 
         /* Small details */
-        .muted { color:#6b7280; font-size:9.5pt; }
+        .muted { color:#ffffff; font-size:9.5pt; }
         .footer {
             position: absolute;
             bottom: 1mm;
